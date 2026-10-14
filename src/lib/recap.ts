@@ -157,7 +157,10 @@ export function onThisDay<E extends { experiencedAt: string }>(
 		return !!p && p.year < t.year && matchingMd.has(e.experiencedAt.slice(5));
 	});
 	if (sameDay.length) {
-		return { mode: 'day', groups: groupByYear(sameDay, (e) => t.year - Number(e.experiencedAt.slice(0, 4))) };
+		return {
+			mode: 'day',
+			groups: groupByYear(sameDay, (e) => t.year - Number(e.experiencedAt.slice(0, 4)))
+		};
 	}
 
 	const tw = isoWeek(today);

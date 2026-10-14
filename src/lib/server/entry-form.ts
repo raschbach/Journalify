@@ -29,7 +29,10 @@ const MAX_TEXT = 2000;
 const MAX_NOTES = 20000;
 const MAX_EXTRA_FIELDS = 30;
 
-const urlSchema = z.url({ protocol: /^https?$/, error: 'Bitte eine gültige Web-Adresse (https://…) angeben.' });
+const urlSchema = z.url({
+	protocol: /^https?$/,
+	error: 'Bitte eine gültige Web-Adresse (https://…) angeben.'
+});
 
 function optionalText(value: string, max: number): string | null {
 	const trimmed = value.trim();
@@ -70,7 +73,8 @@ export async function parseEntryForm(
 
 	const notesRaw = formString(data, 'notes');
 	const notes = notesRaw.trim() ? notesRaw.replace(/\r\n/g, '\n').trim() : null;
-	if (notes && notes.length > MAX_NOTES) errors.notes = `Die Notiz darf höchstens ${MAX_NOTES} Zeichen lang sein.`;
+	if (notes && notes.length > MAX_NOTES)
+		errors.notes = `Die Notiz darf höchstens ${MAX_NOTES} Zeichen lang sein.`;
 
 	const creator = optionalText(formString(data, 'creator'), 200);
 
@@ -90,7 +94,8 @@ export async function parseEntryForm(
 		else errors.coverUrl = 'Bitte eine gültige Web-Adresse (https://…) angeben.';
 	}
 
-	const visibility: Visibility = formString(data, 'visibility') === 'private' ? 'private' : 'friends';
+	const visibility: Visibility =
+		formString(data, 'visibility') === 'private' ? 'private' : 'friends';
 
 	// Kategoriespezifische Felder
 	const fieldValues: FieldValues = {};
@@ -141,7 +146,8 @@ export async function parseEntryForm(
 		}
 		extraFields.push({ label, value });
 	}
-	if (extraFields.length > MAX_EXTRA_FIELDS) errors.extra = `Höchstens ${MAX_EXTRA_FIELDS} eigene Felder.`;
+	if (extraFields.length > MAX_EXTRA_FIELDS)
+		errors.extra = `Höchstens ${MAX_EXTRA_FIELDS} eigene Felder.`;
 
 	// Bibliotheksverknüpfung nur übernehmen, wenn sie zur Kategorie passt
 	let catalogItemId: string | null = formString(data, 'catalogItemId').trim() || null;

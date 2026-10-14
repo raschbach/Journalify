@@ -7,7 +7,15 @@ const ISO_DATE = /^(\d{4})-(\d{2})-(\d{2})$/;
 const MONTH_KEY = /^(\d{4})-(\d{2})$/;
 
 export const WEEKDAYS_SHORT = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
-const WEEKDAYS_LONG = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag'];
+const WEEKDAYS_LONG = [
+	'Montag',
+	'Dienstag',
+	'Mittwoch',
+	'Donnerstag',
+	'Freitag',
+	'Samstag',
+	'Sonntag'
+];
 export const MONTHS = [
 	'Januar',
 	'Februar',

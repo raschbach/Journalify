@@ -31,7 +31,9 @@
 	<div class="flex gap-3.5">
 		<Cover {entry} category={entry.category} size="md" />
 		<div class="min-w-0 flex-1">
-			<h3 class="line-clamp-2 font-sans text-[1.02rem] leading-snug font-semibold tracking-normal break-words">
+			<h3
+				class="line-clamp-2 font-sans text-[1.02rem] leading-snug font-semibold tracking-normal break-words"
+			>
 				{entry.title}
 			</h3>
 			{#if subtitle}
@@ -41,13 +43,18 @@
 				<span class="text-ink-soft">{formatDateWithWeekday(entry.experiencedAt)}</span>
 				<Stars rating={entry.rating} />
 				{#if entry.visibility === 'private' && !showAuthor}
-					<span class="text-muted" title="Privat"><Icon name="lock" size={14} /><span class="sr-only">Privat</span></span>
+					<span class="text-muted" title="Privat"
+						><Icon name="lock" size={14} /><span class="sr-only">Privat</span></span
+					>
 				{/if}
 			</div>
 		</div>
 	</div>
 	{#if excerpt && entry.notes}
-		<p class="mt-2.5 line-clamp-2 border-l-2 pl-3 text-sm leading-relaxed text-ink-soft" style:border-color={entry.category.color}>
+		<p
+			class="mt-2.5 line-clamp-2 border-l-2 pl-3 text-sm leading-relaxed text-ink-soft"
+			style:border-color={entry.category.color}
+		>
 			{entry.notes}
 		</p>
 	{/if}

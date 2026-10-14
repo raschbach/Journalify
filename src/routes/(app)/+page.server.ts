@@ -19,7 +19,13 @@ async function countInRange(userId: string, start: string, end: string) {
 	const [row] = await db
 		.select({ n: count() })
 		.from(entries)
-		.where(and(eq(entries.userId, userId), gte(entries.experiencedAt, start), lte(entries.experiencedAt, end)));
+		.where(
+			and(
+				eq(entries.userId, userId),
+				gte(entries.experiencedAt, start),
+				lte(entries.experiencedAt, end)
+			)
+		);
 	return row?.n ?? 0;
 }
 
@@ -27,7 +33,9 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 	const user = requireUser(locals);
 	const tab = url.searchParams.get('feed') === 'friends' ? 'friends' : 'me';
 	const requested = Number.parseInt(url.searchParams.get('n') ?? '', 10);
-	const limit = Number.isFinite(requested) ? Math.min(Math.max(requested, PAGE_SIZE), 500) : PAGE_SIZE;
+	const limit = Number.isFinite(requested)
+		? Math.min(Math.max(requested, PAGE_SIZE), 500)
+		: PAGE_SIZE;
 
 	const friendIds = await getFriendIds(user.id);
 
@@ -60,7 +68,11 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 	const [weekCount, monthCount, totalCount] = await Promise.all([
 		me?.recapSeenWeek === week.key ? 0 : countInRange(user.id, week.start, week.end),
 		me?.recapSeenMonth === month.key ? 0 : countInRange(user.id, month.start, month.end),
-		db.select({ n: count() }).from(entries).where(eq(entries.userId, user.id)).then((r) => r[0]?.n ?? 0)
+		db
+			.select({ n: count() })
+			.from(entries)
+			.where(eq(entries.userId, user.id))
+			.then((r) => r[0]?.n ?? 0)
 	]);
 
 	return {
@@ -85,9 +97,15 @@ export const actions: Actions = {
 		const data = await request.formData();
 		const today = todayISO();
 		if (data.get('type') === 'month') {
-			await db.update(users).set({ recapSeenMonth: lastCompletedMonth(today).key }).where(eq(users.id, user.id));
+			await db
+				.update(users)
+				.set({ recapSeenMonth: lastCompletedMonth(today).key })
+				.where(eq(users.id, user.id));
 		} else {
-			await db.update(users).set({ recapSeenWeek: lastCompletedWeek(today).key }).where(eq(users.id, user.id));
+			await db
+				.update(users)
+				.set({ recapSeenWeek: lastCompletedWeek(today).key })
+				.where(eq(users.id, user.id));
 		}
 	}
 };

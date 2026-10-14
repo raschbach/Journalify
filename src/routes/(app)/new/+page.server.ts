@@ -42,7 +42,9 @@ export const actions: Actions = {
 		const xpBefore = await getUserXp(user.id);
 		const id = randomUUID();
 		const now = new Date();
-		await db.insert(entries).values({ id, userId: user.id, ...parsed.input, createdAt: now, updatedAt: now });
+		await db
+			.insert(entries)
+			.values({ id, userId: user.id, ...parsed.input, createdAt: now, updatedAt: now });
 		const xpAfter = await getUserXp(user.id);
 
 		flashXp(cookies, url, 'Eintrag gespeichert', xpBefore, xpAfter);

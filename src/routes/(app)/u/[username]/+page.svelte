@@ -24,7 +24,9 @@
 </header>
 
 <ProfileStats level={data.level} stats={data.stats} categories={data.categories} />
-<p class="mt-2 text-center text-xs text-muted">Level und Statistiken basieren auf den geteilten Einträgen.</p>
+<p class="mt-2 text-center text-xs text-muted">
+	Level und Statistiken basieren auf den geteilten Einträgen.
+</p>
 
 <section class="mt-8" aria-labelledby="recent">
 	<h2 id="recent" class="section-title mb-3">Zuletzt geteilt</h2>
@@ -35,6 +37,8 @@
 			{/each}
 		</ul>
 	{:else}
-		<EmptyState emoji="🍃" title="Noch nichts geteilt">{data.user.displayName} hat noch keine Einträge für Freunde freigegeben.</EmptyState>
+		<EmptyState emoji="🍃" title="Noch nichts geteilt"
+			>{data.user.displayName} hat noch keine Einträge für Freunde freigegeben.</EmptyState
+		>
 	{/if}
 </section>

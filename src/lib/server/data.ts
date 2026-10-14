@@ -2,7 +2,13 @@
 
 import { error, redirect, type Cookies } from '@sveltejs/kit';
 import { and, asc, desc, eq, inArray, isNull, or, sql, type SQL } from 'drizzle-orm';
-import type { CategoryInfo, CategoryWithFields, EntrySummary, FieldDef, Flash } from '#lib/types.ts';
+import type {
+	CategoryInfo,
+	CategoryWithFields,
+	EntrySummary,
+	FieldDef,
+	Flash
+} from '#lib/types.ts';
 import { levelProgress, totalXp } from '#lib/xp.ts';
 import { db } from './db';
 import { categories, categoryFields, entries, friendships, users, type Entry } from './db/schema';
@@ -39,7 +45,11 @@ export async function getCategories(userId: string): Promise<CategoryInfo[]> {
 		.select(categoryColumns)
 		.from(categories)
 		.where(accessibleCategory(userId))
-		.orderBy(sql`${categories.ownerId} IS NOT NULL`, asc(categories.sortOrder), asc(categories.name));
+		.orderBy(
+			sql`${categories.ownerId} IS NOT NULL`,
+			asc(categories.sortOrder),
+			asc(categories.name)
+		);
 }
 
 export async function getFields(categoryIds: string[]): Promise<Map<string, FieldDef[]>> {
@@ -205,7 +215,9 @@ export function toSummary(row: SummaryRow, withAuthor = false): EntrySummary {
 			creatorLabel: row.categoryCreatorLabel,
 			yearLabel: row.categoryYearLabel
 		},
-		author: withAuthor ? { username: row.authorUsername, displayName: row.authorDisplayName } : undefined
+		author: withAuthor
+			? { username: row.authorUsername, displayName: row.authorDisplayName }
+			: undefined
 	};
 }
 
@@ -227,7 +239,10 @@ export const newestFirst = [desc(entries.experiencedAt), desc(entries.createdAt)
  */
 export async function getViewableEntry(userId: string, entryId: string) {
 	const [row] = await db
-		.select({ entry: entries, author: { username: users.username, displayName: users.displayName } })
+		.select({
+			entry: entries,
+			author: { username: users.username, displayName: users.displayName }
+		})
 		.from(entries)
 		.innerJoin(users, eq(entries.userId, users.id))
 		.where(eq(entries.id, entryId))
@@ -235,7 +250,8 @@ export async function getViewableEntry(userId: string, entryId: string) {
 	if (!row) error(404, 'Eintrag nicht gefunden');
 	const isOwner = row.entry.userId === userId;
 	if (!isOwner) {
-		const allowed = row.entry.visibility === 'friends' && (await areFriends(userId, row.entry.userId));
+		const allowed =
+			row.entry.visibility === 'friends' && (await areFriends(userId, row.entry.userId));
 		if (!allowed) error(404, 'Eintrag nicht gefunden');
 	}
 	return { entry: row.entry, author: row.author, isOwner };

@@ -32,7 +32,10 @@ export const load: PageServerLoad = async ({ locals }) => {
 		a.other.displayName.localeCompare(b.other.displayName, 'de');
 
 	return {
-		friends: rows.filter((r) => r.status === 'accepted').sort(byName).map((r) => r.other),
+		friends: rows
+			.filter((r) => r.status === 'accepted')
+			.sort(byName)
+			.map((r) => r.other),
 		incoming: rows
 			.filter((r) => r.status === 'pending' && r.addresseeId === me.id)
 			.sort(byName)
@@ -73,7 +76,10 @@ export const actions: Actions = {
 			return fail(400, { username, addError: `Ihr seid schon befreundet.` });
 		}
 		if (existing?.requesterId === me.id) {
-			return fail(400, { username, addError: `Du hast ${other.displayName} schon eine Anfrage geschickt.` });
+			return fail(400, {
+				username,
+				addError: `Du hast ${other.displayName} schon eine Anfrage geschickt.`
+			});
 		}
 		if (existing) {
 			// Die andere Person hat bereits angefragt → direkt annehmen
@@ -85,7 +91,9 @@ export const actions: Actions = {
 			return { added: true };
 		}
 
-		await db.insert(friendships).values({ requesterId: me.id, addresseeId: other.id, status: 'pending' });
+		await db
+			.insert(friendships)
+			.values({ requesterId: me.id, addresseeId: other.id, status: 'pending' });
 		setFlash(cookies, url, { message: `Anfrage an ${other.displayName} gesendet` });
 		return { added: true };
 	},
@@ -104,7 +112,8 @@ export const actions: Actions = {
 					eq(friendships.status, 'pending')
 				)
 			);
-		if (result.rowsAffected) setFlash(cookies, url, { message: `Du und ${other.displayName} seid jetzt befreundet 🎉` });
+		if (result.rowsAffected)
+			setFlash(cookies, url, { message: `Du und ${other.displayName} seid jetzt befreundet 🎉` });
 	},
 
 	decline: async ({ locals, request, cookies, url }) => {
@@ -154,6 +163,9 @@ export const actions: Actions = {
 					)
 				)
 			);
-		setFlash(cookies, url, { message: `${other.displayName} ist nicht mehr in deiner Freundesliste`, tone: 'info' });
+		setFlash(cookies, url, {
+			message: `${other.displayName} ist nicht mehr in deiner Freundesliste`,
+			tone: 'info'
+		});
 	}
 };

@@ -24,7 +24,11 @@ export function generateSessionToken(): string {
 }
 
 export async function createSession(token: string, userId: string) {
-	const session = { id: hashToken(token), userId, expiresAt: new Date(Date.now() + SESSION_DURATION) };
+	const session = {
+		id: hashToken(token),
+		userId,
+		expiresAt: new Date(Date.now() + SESSION_DURATION)
+	};
 	await db.insert(sessions).values(session);
 	return session;
 }
@@ -50,7 +54,10 @@ export async function validateSessionToken(token: string) {
 
 	if (Date.now() >= session.expiresAt.getTime() - RENEW_THRESHOLD) {
 		session.expiresAt = new Date(Date.now() + SESSION_DURATION);
-		await db.update(sessions).set({ expiresAt: session.expiresAt }).where(eq(sessions.id, session.id));
+		await db
+			.update(sessions)
+			.set({ expiresAt: session.expiresAt })
+			.where(eq(sessions.id, session.id));
 	}
 
 	return { session, user: user satisfies SessionUser };

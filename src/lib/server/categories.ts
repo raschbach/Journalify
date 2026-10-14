@@ -3,7 +3,12 @@
 import { randomUUID } from 'node:crypto';
 import { and, eq, isNull, ne, or } from 'drizzle-orm';
 import { z } from 'zod';
-import { migrateEntryFields, slugify, uniqueSlug, type MigrationField } from '#lib/field-migration.ts';
+import {
+	migrateEntryFields,
+	slugify,
+	uniqueSlug,
+	type MigrationField
+} from '#lib/field-migration.ts';
 import { FIELD_TYPES } from '#lib/types.ts';
 import { db } from './db/index.ts';
 import { categories, categoryFields, entries } from './db/schema.ts';
@@ -85,7 +90,7 @@ function graphemeCount(value: string): number {
 export function parseCategoryForm(
 	data: FormData
 ): { ok: true; input: CategoryFormInput } | { ok: false; errors: Record<string, string> } {
-	let fields: unknown = [];
+	let fields: unknown;
 	try {
 		fields = JSON.parse(formString(data, 'fields') || '[]');
 	} catch {
@@ -163,7 +168,10 @@ export async function createCategory(userId: string, input: CategoryFormInput): 
 
 export async function updateCategory(userId: string, categoryId: string, input: CategoryFormInput) {
 	const slug = uniqueSlug(slugify(input.name), await takenSlugs(userId, categoryId));
-	const oldFields = await db.select().from(categoryFields).where(eq(categoryFields.categoryId, categoryId));
+	const oldFields = await db
+		.select()
+		.from(categoryFields)
+		.where(eq(categoryFields.categoryId, categoryId));
 	const oldById = new Map(oldFields.map((f) => [f.id, f]));
 	const keys = new Set(oldFields.map((f) => f.key));
 
@@ -196,7 +204,13 @@ export async function updateCategory(userId: string, categoryId: string, input: 
 			.where(and(eq(categories.id, categoryId), eq(categories.ownerId, userId)));
 
 		// Vorhandene Werte an geänderte/gelöschte Felder anpassen – ohne Datenverlust
-		const toMigration = (f: { id: string; key: string; label: string; type: MigrationField['type']; options: string[] | null }) => ({
+		const toMigration = (f: {
+			id: string;
+			key: string;
+			label: string;
+			type: MigrationField['type'];
+			options: string[] | null;
+		}) => ({
 			id: f.id,
 			key: f.key,
 			label: f.label,
@@ -204,7 +218,11 @@ export async function updateCategory(userId: string, categoryId: string, input: 
 			options: f.options ?? null
 		});
 		const categoryEntries = await tx
-			.select({ id: entries.id, fieldValues: entries.fieldValues, extraFields: entries.extraFields })
+			.select({
+				id: entries.id,
+				fieldValues: entries.fieldValues,
+				extraFields: entries.extraFields
+			})
 			.from(entries)
 			.where(and(eq(entries.categoryId, categoryId), eq(entries.userId, userId)));
 		for (const entry of categoryEntries) {
@@ -223,7 +241,8 @@ export async function updateCategory(userId: string, categoryId: string, input: 
 		}
 
 		for (const old of oldFields) {
-			if (!keptIds.has(old.id)) await tx.delete(categoryFields).where(eq(categoryFields.id, old.id));
+			if (!keptIds.has(old.id))
+				await tx.delete(categoryFields).where(eq(categoryFields.id, old.id));
 		}
 		for (const field of nextFields) {
 			const { isNew, ...values } = field;
@@ -247,8 +266,12 @@ export async function updateCategory(userId: string, categoryId: string, input: 
 
 export async function deleteCategory(userId: string, categoryId: string) {
 	await db.transaction(async (tx) => {
-		await tx.delete(entries).where(and(eq(entries.categoryId, categoryId), eq(entries.userId, userId)));
+		await tx
+			.delete(entries)
+			.where(and(eq(entries.categoryId, categoryId), eq(entries.userId, userId)));
 		await tx.delete(categoryFields).where(eq(categoryFields.categoryId, categoryId));
-		await tx.delete(categories).where(and(eq(categories.id, categoryId), eq(categories.ownerId, userId)));
+		await tx
+			.delete(categories)
+			.where(and(eq(categories.id, categoryId), eq(categories.ownerId, userId)));
 	});
 }

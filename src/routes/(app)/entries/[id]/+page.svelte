@@ -10,7 +10,14 @@
 	import Stars from '#lib/components/Stars.svelte';
 	import { formatDate, formatDateLong, relativeLabel, toISODate } from '#lib/dates.ts';
 	import { randomPrompt } from '#lib/prompts.ts';
-	import { describeXp, entryXp, LONG_NOTE_MIN_LENGTH, NOTE_MIN_LENGTH, noteLength, XP_RULES } from '#lib/xp.ts';
+	import {
+		describeXp,
+		entryXp,
+		LONG_NOTE_MIN_LENGTH,
+		NOTE_MIN_LENGTH,
+		noteLength,
+		XP_RULES
+	} from '#lib/xp.ts';
 	import type { PageProps } from './$types';
 
 	let { data, form }: PageProps = $props();
@@ -38,11 +45,7 @@
 <PageHeader back="/" historyBack>
 	{#snippet actions()}
 		{#if data.isOwner}
-			<a
-				href="/entries/{entry.id}/edit"
-				class="btn btn-secondary"
-				data-sveltekit-replacestate
-			>
+			<a href="/entries/{entry.id}/edit" class="btn btn-secondary" data-sveltekit-replacestate>
 				<Icon name="pencil" size={17} /> Bearbeiten
 			</a>
 			<button
@@ -100,13 +103,16 @@
 	<!-- Notiz -->
 	{#if entry.notes}
 		<section class="card mt-6 p-5" aria-label="Notiz">
-			<p class="text-[1.05rem] leading-relaxed whitespace-pre-line text-ink break-words">{entry.notes}</p>
+			<p class="text-[1.05rem] leading-relaxed break-words whitespace-pre-line text-ink">
+				{entry.notes}
+			</p>
 		</section>
 	{:else if data.isOwner}
 		<section class="mt-6 rounded-2xl border-2 border-dashed border-gold/50 bg-gold-soft/50 p-5">
 			<h2 class="flex items-center gap-2 text-lg font-semibold">
 				<Icon name="pencil" size={18} class="text-gold" /> Notiz ergänzen
-				<span class="ml-auto rounded-full bg-gold px-2.5 py-0.5 font-sans text-sm font-bold text-[#1f1b16]"
+				<span
+					class="ml-auto rounded-full bg-gold px-2.5 py-0.5 font-sans text-sm font-bold text-[#1f1b16]"
 					>+{XP_RULES.note} XP</span
 				>
 			</h2>
@@ -131,8 +137,7 @@
 					rows="4"
 					placeholder={notePrompt}
 					bind:value={noteDraft}
-					aria-invalid={form?.noteError ? 'true' : undefined}
-				></textarea>
+					aria-invalid={form?.noteError ? 'true' : undefined}></textarea>
 				<div class="mt-2 flex flex-wrap items-center justify-between gap-2">
 					<p class="text-sm text-muted">
 						{#if form?.noteError}
@@ -166,7 +171,8 @@
 	<!-- XP -->
 	{#if data.isOwner}
 		<section class="mt-6 flex items-start gap-3 rounded-2xl bg-surface-2 p-4">
-			<span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-gold-soft text-lg text-gold"
+			<span
+				class="flex size-10 shrink-0 items-center justify-center rounded-full bg-gold-soft text-lg text-gold"
 				>✦</span
 			>
 			<div class="text-sm">
@@ -175,15 +181,19 @@
 				{#if length >= NOTE_MIN_LENGTH && length < LONG_NOTE_MIN_LENGTH}
 					<p class="mt-1 text-ink-soft">
 						Noch {LONG_NOTE_MIN_LENGTH - length} Zeichen für +{XP_RULES.longNote} XP –
-						<a class="font-semibold underline underline-offset-4" href="/entries/{entry.id}/edit" data-sveltekit-replacestate
-							>Notiz erweitern</a
+						<a
+							class="font-semibold underline underline-offset-4"
+							href="/entries/{entry.id}/edit"
+							data-sveltekit-replacestate>Notiz erweitern</a
 						>
 					</p>
 				{:else if !entry.rating}
 					<p class="mt-1 text-ink-soft">
 						Eine Bewertung bringt +{XP_RULES.rating} XP –
-						<a class="font-semibold underline underline-offset-4" href="/entries/{entry.id}/edit" data-sveltekit-replacestate
-							>jetzt bewerten</a
+						<a
+							class="font-semibold underline underline-offset-4"
+							href="/entries/{entry.id}/edit"
+							data-sveltekit-replacestate>jetzt bewerten</a
 						>
 					</p>
 				{/if}

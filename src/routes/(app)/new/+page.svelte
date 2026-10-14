@@ -18,7 +18,10 @@
 </svelte:head>
 
 {#if data.selected}
-	<PageHeader title="Neuer Eintrag" back={data.date !== data.today ? `/new?date=${data.date}` : '/new'} backLabel="Andere Kategorie wählen"
+	<PageHeader
+		title="Neuer Eintrag"
+		back={data.date !== data.today ? `/new?date=${data.date}` : '/new'}
+		backLabel="Andere Kategorie wählen"
 		replace
 	/>
 	{#key data.selected}
@@ -33,7 +36,9 @@
 {:else}
 	<PageHeader
 		title="Was hast du erlebt?"
-		subtitle={data.date !== data.today ? `Für den ${formatDate(data.date)}` : 'Wähle eine Kategorie'}
+		subtitle={data.date !== data.today
+			? `Für den ${formatDate(data.date)}`
+			: 'Wähle eine Kategorie'}
 		back="/"
 		backLabel="Abbrechen"
 	/>
@@ -48,7 +53,9 @@
 					style:--cat={category.color}
 				>
 					<span class="text-4xl leading-none" aria-hidden="true">{category.emoji}</span>
-					<span class="cat-text mt-3 font-display text-lg leading-tight font-semibold">{category.name}</span>
+					<span class="cat-text mt-3 font-display text-lg leading-tight font-semibold"
+						>{category.name}</span
+					>
 				</a>
 			</li>
 		{/each}
@@ -57,8 +64,9 @@
 				href="/categories/new"
 				class="flex min-h-28 flex-col justify-between rounded-2xl border border-dashed border-line p-4 text-muted transition hover:bg-surface-2 hover:text-ink"
 			>
-				<span class="flex size-10 items-center justify-center rounded-full bg-surface-2 text-2xl" aria-hidden="true"
-					>+</span
+				<span
+					class="flex size-10 items-center justify-center rounded-full bg-surface-2 text-2xl"
+					aria-hidden="true">+</span
 				>
 				<span class="mt-3 text-sm leading-tight font-semibold">Eigene Kategorie anlegen</span>
 			</a>

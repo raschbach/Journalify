@@ -30,7 +30,28 @@
 		[...existingIds].filter((id) => !v.fields.some((f) => f.id === id)).length
 	);
 
-	const EMOJIS = ['🎮', '🎙️', '🍽️', '✈️', '🎨', '🏟️', '📰', '🎲', '🧩', '🍷', '🏛️', '🎪', '💃', '🎻', '📷', '🌳', '⛰️', '🧘', '📻', '🎠'];
+	const EMOJIS = [
+		'🎮',
+		'🎙️',
+		'🍽️',
+		'✈️',
+		'🎨',
+		'🏟️',
+		'📰',
+		'🎲',
+		'🧩',
+		'🍷',
+		'🏛️',
+		'🎪',
+		'💃',
+		'🎻',
+		'📷',
+		'🌳',
+		'⛰️',
+		'🧘',
+		'📻',
+		'🎠'
+	];
 
 	const serializedFields = $derived(
 		JSON.stringify(
@@ -107,13 +128,20 @@
 	<input type="hidden" name="color" value={v.color} />
 
 	<!-- Vorschau -->
-	<div class="mb-6 flex items-center gap-4 rounded-3xl p-4 transition-colors" style:background-color="color-mix(in oklab, {v.color} 14%, var(--surface))">
-		<span class="flex size-16 items-center justify-center rounded-2xl bg-surface/60 text-4xl" aria-hidden="true"
-			>{v.emoji || '❔'}</span
+	<div
+		class="mb-6 flex items-center gap-4 rounded-3xl p-4 transition-colors"
+		style:background-color="color-mix(in oklab, {v.color} 14%, var(--surface))"
+	>
+		<span
+			class="flex size-16 items-center justify-center rounded-2xl bg-surface/60 text-4xl"
+			aria-hidden="true">{v.emoji || '❔'}</span
 		>
 		<div class="min-w-0">
 			<p class="text-xs font-semibold tracking-wide text-muted uppercase">Vorschau</p>
-			<p class="truncate font-display text-2xl font-semibold" style:color="color-mix(in oklab, {v.color} 80%, var(--ink))">
+			<p
+				class="truncate font-display text-2xl font-semibold"
+				style:color="color-mix(in oklab, {v.color} 80%, var(--ink))"
+			>
 				{v.name || 'Neue Kategorie'}
 			</p>
 		</div>
@@ -142,7 +170,9 @@
 						type="button"
 						class={[
 							'flex size-11 cursor-pointer items-center justify-center rounded-xl text-2xl transition',
-							v.emoji === emoji ? 'bg-primary ring-2 ring-primary' : 'bg-surface-2 hover:bg-surface-3'
+							v.emoji === emoji
+								? 'bg-primary ring-2 ring-primary'
+								: 'bg-surface-2 hover:bg-surface-3'
 						]}
 						aria-label="Emoji {emoji}"
 						aria-pressed={v.emoji === emoji}
@@ -172,12 +202,19 @@
 						type="button"
 						class="flex size-11 cursor-pointer items-center justify-center rounded-full transition"
 						style:background-color={color}
-						style:box-shadow={v.color === color ? `0 0 0 3px var(--bg), 0 0 0 5px ${color}` : 'none'}
+						style:box-shadow={v.color === color
+							? `0 0 0 3px var(--bg), 0 0 0 5px ${color}`
+							: 'none'}
 						aria-label="Farbe {color}"
 						aria-pressed={v.color === color}
 						onclick={() => (v.color = color)}
 					>
-						{#if v.color === color}<Icon name="check" size={18} strokeWidth={3} class="text-white" />{/if}
+						{#if v.color === color}<Icon
+								name="check"
+								size={18}
+								strokeWidth={3}
+								class="text-white"
+							/>{/if}
 					</button>
 				{/each}
 			</div>
@@ -187,8 +224,8 @@
 		<section aria-labelledby="fields-title">
 			<h2 id="fields-title" class="label mb-0">Felder</h2>
 			<p class="mb-3 text-sm text-muted">
-				Titel, Datum, Bewertung und Notiz gibt es immer. Hier legst du zusätzliche Vorschläge an – beim Eintragen sind
-				alle optional.
+				Titel, Datum, Bewertung und Notiz gibt es immer. Hier legst du zusätzliche Vorschläge an –
+				beim Eintragen sind alle optional.
 			</p>
 
 			{#if v.fields.length}
@@ -207,7 +244,9 @@
 											bind:value={field.label}
 											aria-invalid={err(`fields.${i}.label`) ? 'true' : undefined}
 										/>
-										{#if err(`fields.${i}.label`)}<p class="field-error">{err(`fields.${i}.label`)}</p>{/if}
+										{#if err(`fields.${i}.label`)}<p class="field-error">
+												{err(`fields.${i}.label`)}
+											</p>{/if}
 									</div>
 									<div>
 										<label class="sr-only" for="field-type-{i}">Typ von Feld {i + 1}</label>
@@ -219,7 +258,9 @@
 									</div>
 									{#if field.type === 'select'}
 										<div class="sm:col-span-2">
-											<label class="sr-only" for="field-options-{i}">Optionen von Feld {i + 1}</label>
+											<label class="sr-only" for="field-options-{i}"
+												>Optionen von Feld {i + 1}</label
+											>
 											<input
 												class="input"
 												id="field-options-{i}"
@@ -233,7 +274,9 @@
 										</div>
 									{:else if field.type !== 'boolean'}
 										<div class="sm:col-span-2">
-											<label class="sr-only" for="field-placeholder-{i}">Platzhalter von Feld {i + 1}</label>
+											<label class="sr-only" for="field-placeholder-{i}"
+												>Platzhalter von Feld {i + 1}</label
+											>
 											<input
 												class="input text-sm"
 												id="field-placeholder-{i}"
@@ -277,15 +320,17 @@
 					{/each}
 				</ul>
 			{:else}
-				<p class="rounded-2xl border border-dashed border-line px-4 py-5 text-center text-sm text-muted">
+				<p
+					class="rounded-2xl border border-dashed border-line px-4 py-5 text-center text-sm text-muted"
+				>
 					Noch keine Felder. Du kannst auch ohne Felder starten.
 				</p>
 			{/if}
 
 			{#if removedCount}
 				<p class="mt-3 rounded-xl bg-gold-soft px-3.5 py-2.5 text-sm text-ink-soft">
-					{removedCount === 1 ? '1 Feld wird' : `${removedCount} Felder werden`} entfernt. Bereits eingetragene Werte bleiben in
-					den Einträgen als eigene Felder erhalten.
+					{removedCount === 1 ? '1 Feld wird' : `${removedCount} Felder werden`} entfernt. Bereits eingetragene
+					Werte bleiben in den Einträgen als eigene Felder erhalten.
 				</p>
 			{/if}
 			{#if err('fields')}<p class="field-error">{err('fields')}</p>{/if}

@@ -1,6 +1,14 @@
 // Gemeinsame Typen für Server und Client (keine Laufzeit-Abhängigkeiten).
 
-export const FIELD_TYPES = ['text', 'longtext', 'number', 'date', 'select', 'people', 'boolean'] as const;
+export const FIELD_TYPES = [
+	'text',
+	'longtext',
+	'number',
+	'date',
+	'select',
+	'people',
+	'boolean'
+] as const;
 export type FieldType = (typeof FIELD_TYPES)[number];
 
 export const FIELD_TYPE_LABELS: Record<FieldType, string> = {

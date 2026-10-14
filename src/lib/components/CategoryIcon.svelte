@@ -17,7 +17,11 @@
 </script>
 
 <span
-	class={['cat-tint inline-flex shrink-0 items-center justify-center leading-none', sizes[size], className]}
+	class={[
+		'cat-tint inline-flex shrink-0 items-center justify-center leading-none',
+		sizes[size],
+		className
+	]}
 	style:--cat={color}
 	aria-hidden="true">{emoji}</span
 >

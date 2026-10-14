@@ -10,7 +10,12 @@
 	<title>Bearbeiten: {data.title} · Journalify</title>
 </svelte:head>
 
-<PageHeader title="Eintrag bearbeiten" back="/entries/{data.entryId}" backLabel="Abbrechen" replace />
+<PageHeader
+	title="Eintrag bearbeiten"
+	back="/entries/{data.entryId}"
+	backLabel="Abbrechen"
+	replace
+/>
 
 {#key data.entryId}
 	<EntryForm

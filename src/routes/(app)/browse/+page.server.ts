@@ -22,22 +22,32 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 	const category = params.category ? categories.find((c) => c.slug === params.category) : undefined;
 
 	const rows = await db
-		.select({ ...summaryColumns, fieldValues: entries.fieldValues, extraFields: entries.extraFields })
+		.select({
+			...summaryColumns,
+			fieldValues: entries.fieldValues,
+			extraFields: entries.extraFields
+		})
 		.from(entries)
 		.innerJoin(categoriesTable, eq(entries.categoryId, categoriesTable.id))
 		.innerJoin(users, eq(entries.userId, users.id))
-		.where(and(eq(entries.userId, user.id), category ? eq(entries.categoryId, category.id) : undefined));
+		.where(
+			and(eq(entries.userId, user.id), category ? eq(entries.categoryId, category.id) : undefined)
+		);
 
 	const all = rows.map((r) => ({
 		...toSummary(r),
 		fieldValues: r.fieldValues ?? {},
 		extraFields: r.extraFields ?? []
 	}));
-	const years = [...new Set(all.map((e) => Number(e.experiencedAt.slice(0, 4))))].sort((a, b) => b - a);
+	const years = [...new Set(all.map((e) => Number(e.experiencedAt.slice(0, 4))))].sort(
+		(a, b) => b - a
+	);
 	const results = filterAndSort(all, { ...params, category: category?.slug ?? null });
 
 	const requested = Number.parseInt(url.searchParams.get('n') ?? '', 10);
-	const limit = Number.isFinite(requested) ? Math.min(Math.max(requested, PAGE_SIZE), 1000) : PAGE_SIZE;
+	const limit = Number.isFinite(requested)
+		? Math.min(Math.max(requested, PAGE_SIZE), 1000)
+		: PAGE_SIZE;
 
 	return {
 		params: { ...params, category: category?.slug ?? null },

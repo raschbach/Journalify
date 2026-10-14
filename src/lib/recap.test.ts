@@ -62,7 +62,13 @@ describe('Zeiträume', () => {
 describe('buildRecap', () => {
 	it('liefert leere Werte ohne Einträge', () => {
 		const r = buildRecap([]);
-		expect(r).toMatchObject({ count: 0, averageRating: null, topRated: null, longestNote: null, xp: 0 });
+		expect(r).toMatchObject({
+			count: 0,
+			averageRating: null,
+			topRated: null,
+			longestNote: null,
+			xp: 0
+		});
 	});
 
 	it('berechnet Statistiken', () => {

@@ -7,7 +7,17 @@
 
 	let { name, size = 'md', class: className = '' }: Props = $props();
 
-	const PALETTE = ['#e11d48', '#7c3aed', '#d97706', '#059669', '#ea580c', '#c026d3', '#4f46e5', '#0284c7', '#0d9488'];
+	const PALETTE = [
+		'#e11d48',
+		'#7c3aed',
+		'#d97706',
+		'#059669',
+		'#ea580c',
+		'#c026d3',
+		'#4f46e5',
+		'#0284c7',
+		'#0d9488'
+	];
 
 	const color = $derived.by(() => {
 		let hash = 0;

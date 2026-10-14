@@ -1,12 +1,7 @@
 import { and, eq, gte, lt, lte, ne, sql } from 'drizzle-orm';
 import { todayISO } from '#lib/dates.ts';
 import { buildRecap, lastCompletedMonth, lastCompletedWeek, onThisDay } from '#lib/recap.ts';
-import {
-	getCategories,
-	requireUser,
-	selectSummaries,
-	toSummary
-} from '#lib/server/data.ts';
+import { getCategories, requireUser, selectSummaries, toSummary } from '#lib/server/data.ts';
 import { entries } from '#lib/server/db/schema.ts';
 import type { PageServerLoad } from './$types';
 
@@ -27,7 +22,9 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 		.limit(1);
 	if (!randomRow && previousId) {
 		// Es gibt nur einen passenden Eintrag
-		[randomRow] = await selectSummaries().where(and(...conditions)).limit(1);
+		[randomRow] = await selectSummaries()
+			.where(and(...conditions))
+			.limit(1);
 	}
 
 	// „An diesem Tag“ – nur Einträge aus früheren Jahren
@@ -45,10 +42,19 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 	const month = lastCompletedMonth(today);
 	const recapTeaser = async (start: string, end: string) => {
 		const rows = await selectSummaries().where(
-			and(eq(entries.userId, user.id), gte(entries.experiencedAt, start), lte(entries.experiencedAt, end))
+			and(
+				eq(entries.userId, user.id),
+				gte(entries.experiencedAt, start),
+				lte(entries.experiencedAt, end)
+			)
 		);
 		const r = buildRecap(rows.map((row) => ({ ...toSummary(row), categoryId: row.categoryId })));
-		return { count: r.count, averageRating: r.averageRating, xp: r.xp, emojis: [...new Set(r.entries.map((e) => e.category.emoji))].slice(0, 5) };
+		return {
+			count: r.count,
+			averageRating: r.averageRating,
+			xp: r.xp,
+			emojis: [...new Set(r.entries.map((e) => e.category.emoji))].slice(0, 5)
+		};
 	};
 	const [weekTeaser, monthTeaser] = await Promise.all([
 		recapTeaser(week.start, week.end),

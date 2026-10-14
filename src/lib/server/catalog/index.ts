@@ -9,7 +9,11 @@ import { catalogItems } from '../db/schema';
  * später können hier z. B. TMDB, Open Library oder MusicBrainz angebunden werden.
  */
 export interface CatalogProvider {
-	search(category: { id: string; slug: string }, query: string, limit?: number): Promise<CatalogResult[]>;
+	search(
+		category: { id: string; slug: string },
+		query: string,
+		limit?: number
+	): Promise<CatalogResult[]>;
 }
 
 export class LocalCatalogProvider implements CatalogProvider {

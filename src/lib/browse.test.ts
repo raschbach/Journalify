@@ -1,7 +1,16 @@
 import { describe, expect, it } from 'vitest';
 import { browseQuery, filterAndSort, parseBrowseParams, type Searchable } from './browse';
 
-const category = { id: 'film', slug: 'film', name: 'Film', emoji: '🎬', color: '#000', ownerId: null, creatorLabel: null, yearLabel: null };
+const category = {
+	id: 'film',
+	slug: 'film',
+	name: 'Film',
+	emoji: '🎬',
+	color: '#000',
+	ownerId: null,
+	creatorLabel: null,
+	yearLabel: null
+};
 let n = 0;
 function e(partial: Partial<Searchable>): Searchable {
 	n++;
@@ -26,7 +35,13 @@ function e(partial: Partial<Searchable>): Searchable {
 describe('Stöbern', () => {
 	it('liest und schreibt URL-Parameter ohne Standardwerte', () => {
 		const p = parseBrowseParams(new URLSearchParams('sort=title&min=4&notes=1&q=%20nolan%20'));
-		expect(p).toMatchObject({ sort: 'title', dir: 'asc', minRating: 4, withNotes: true, q: ' nolan ' });
+		expect(p).toMatchObject({
+			sort: 'title',
+			dir: 'asc',
+			minRating: 4,
+			withNotes: true,
+			q: ' nolan '
+		});
 		expect(browseQuery(p)).toBe('?q=nolan&sort=title&min=4&notes=1');
 		expect(browseQuery(parseBrowseParams(new URLSearchParams('')))).toBe('');
 		expect(parseBrowseParams(new URLSearchParams('sort=evil&min=9')).sort).toBe('date');
@@ -56,19 +71,35 @@ describe('Stöbern', () => {
 		const base = parseBrowseParams(new URLSearchParams());
 		expect(filterAndSort(list, { ...base, minRating: 4 }).map((x) => x.id)).toEqual([list[0].id]);
 		expect(filterAndSort(list, { ...base, year: 2026 })).toHaveLength(2);
-		expect(filterAndSort(list, { ...base, withNotes: true }).map((x) => x.id)).toEqual([list[0].id]);
+		expect(filterAndSort(list, { ...base, withNotes: true }).map((x) => x.id)).toEqual([
+			list[0].id
+		]);
 	});
 
 	it('sortiert nach Bewertung mit unbewerteten Einträgen am Ende', () => {
 		const list = [e({ rating: null }), e({ rating: 2 }), e({ rating: 5 })];
 		const base = parseBrowseParams(new URLSearchParams('sort=rating'));
 		expect(filterAndSort([...list], base).map((x) => x.rating)).toEqual([5, 2, null]);
-		expect(filterAndSort([...list], { ...base, dir: 'asc' }).map((x) => x.rating)).toEqual([2, 5, null]);
+		expect(filterAndSort([...list], { ...base, dir: 'asc' }).map((x) => x.rating)).toEqual([
+			2,
+			5,
+			null
+		]);
 	});
 
 	it('sortiert Namen deutsch', () => {
-		const list = [e({ title: 'Zebra' }), e({ title: 'Äpfel' }), e({ title: 'apfel 10' }), e({ title: 'apfel 9' })];
+		const list = [
+			e({ title: 'Zebra' }),
+			e({ title: 'Äpfel' }),
+			e({ title: 'apfel 10' }),
+			e({ title: 'apfel 9' })
+		];
 		const p = parseBrowseParams(new URLSearchParams('sort=title'));
-		expect(filterAndSort(list, p).map((x) => x.title)).toEqual(['Äpfel', 'apfel 9', 'apfel 10', 'Zebra']);
+		expect(filterAndSort(list, p).map((x) => x.title)).toEqual([
+			'Äpfel',
+			'apfel 9',
+			'apfel 10',
+			'Zebra'
+		]);
 	});
 });

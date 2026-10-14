@@ -3,7 +3,7 @@
 	import type { ExtraField, FieldDef, FieldValue } from '../types';
 
 	interface Props {
-		category: { creatorLabel: string | null; fields: FieldDef[] };
+		category: { fields: FieldDef[] };
 		fieldValues: Record<string, FieldValue>;
 		extraFields: ExtraField[];
 	}
@@ -22,7 +22,8 @@
 			const raw = fieldValues[field.key];
 			if (raw === undefined || raw === '' || raw === false || raw === null) continue;
 			if (field.type === 'boolean') list.push({ label: field.label, value: 'Ja' });
-			else if (field.type === 'date') list.push({ label: field.label, value: formatDate(String(raw)) });
+			else if (field.type === 'date')
+				list.push({ label: field.label, value: formatDate(String(raw)) });
 			else if (field.type === 'number')
 				list.push({
 					label: field.label,

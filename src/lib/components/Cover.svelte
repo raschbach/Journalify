@@ -24,7 +24,11 @@
 </script>
 
 <div
-	class={['cat-tint relative flex shrink-0 items-center justify-center overflow-hidden', sizes[size], className]}
+	class={[
+		'cat-tint relative flex shrink-0 items-center justify-center overflow-hidden',
+		sizes[size],
+		className
+	]}
 	style:--cat={category.color}
 >
 	{#if entry.coverUrl && !failed}

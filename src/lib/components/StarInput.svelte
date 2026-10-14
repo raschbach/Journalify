@@ -33,13 +33,7 @@
 
 <input type="hidden" {name} value={value ?? ''} />
 <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
-	<div
-		class="-ml-1.5 flex"
-		role="radiogroup"
-		aria-label="Bewertung"
-		tabindex="0"
-		{onkeydown}
-	>
+	<div class="-ml-1.5 flex" role="radiogroup" aria-label="Bewertung" tabindex="0" {onkeydown}>
 		{#each [1, 2, 3, 4, 5] as star (star)}
 			<button
 				type="button"

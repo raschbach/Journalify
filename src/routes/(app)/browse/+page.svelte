@@ -59,7 +59,9 @@
 	<h1 class="text-[1.7rem] leading-tight font-semibold">Stöbern</h1>
 	<p class="text-sm text-muted">
 		{data.total}
-		{data.total === 1 ? 'Eintrag' : 'Einträge'}{p.q || activeFilters || p.category ? ' gefunden' : ' in deinem Logbuch'}
+		{data.total === 1 ? 'Eintrag' : 'Einträge'}{p.q || activeFilters || p.category
+			? ' gefunden'
+			: ' in deinem Logbuch'}
 	</p>
 </header>
 
@@ -72,7 +74,11 @@
 		apply({ q });
 	}}
 >
-	<Icon name="search" size={19} class="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-muted" />
+	<Icon
+		name="search"
+		size={19}
+		class="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-muted"
+	/>
 	<label for="browse-search" class="sr-only">Suche in Titeln, Notizen und Feldern</label>
 	<input
 		id="browse-search"
@@ -100,8 +106,17 @@
 	{/if}
 </form>
 
-<div class="scrollbar-none -mx-4 mb-3 flex gap-2 overflow-x-auto px-4 pb-1" role="group" aria-label="Kategorie">
-	<button type="button" class="chip" aria-pressed={!p.category} onclick={() => apply({ category: null })}>Alle</button>
+<div
+	class="-mx-4 mb-3 flex scrollbar-none gap-2 overflow-x-auto px-4 pb-1"
+	role="group"
+	aria-label="Kategorie"
+>
+	<button
+		type="button"
+		class="chip"
+		aria-pressed={!p.category}
+		onclick={() => apply({ category: null })}>Alle</button
+	>
 	{#each data.categories as category (category.id)}
 		<button
 			type="button"
@@ -133,7 +148,9 @@
 	<button
 		type="button"
 		class="btn btn-secondary px-3"
-		aria-label={p.dir === 'asc' ? 'Aufsteigend sortiert – umkehren' : 'Absteigend sortiert – umkehren'}
+		aria-label={p.dir === 'asc'
+			? 'Aufsteigend sortiert – umkehren'
+			: 'Absteigend sortiert – umkehren'}
 		title={p.dir === 'asc' ? 'Aufsteigend' : 'Absteigend'}
 		onclick={() => apply({ dir: p.dir === 'asc' ? 'desc' : 'asc' })}
 	>
@@ -153,7 +170,10 @@
 	<div class="ml-auto flex rounded-xl bg-surface-2 p-0.5" role="group" aria-label="Ansicht">
 		<button
 			type="button"
-			class={['flex size-10 cursor-pointer items-center justify-center rounded-[0.6rem]', p.view === 'list' ? 'bg-surface shadow-card' : 'text-muted']}
+			class={[
+				'flex size-10 cursor-pointer items-center justify-center rounded-[0.6rem]',
+				p.view === 'list' ? 'bg-surface shadow-card' : 'text-muted'
+			]}
 			aria-label="Listenansicht"
 			aria-pressed={p.view === 'list'}
 			onclick={() => apply({ view: 'list' })}
@@ -162,7 +182,10 @@
 		</button>
 		<button
 			type="button"
-			class={['flex size-10 cursor-pointer items-center justify-center rounded-[0.6rem]', p.view === 'grid' ? 'bg-surface shadow-card' : 'text-muted']}
+			class={[
+				'flex size-10 cursor-pointer items-center justify-center rounded-[0.6rem]',
+				p.view === 'grid' ? 'bg-surface shadow-card' : 'text-muted'
+			]}
 			aria-label="Rasteransicht"
 			aria-pressed={p.view === 'grid'}
 			onclick={() => apply({ view: 'grid' })}
@@ -177,7 +200,12 @@
 		<fieldset>
 			<legend class="label">Mindestbewertung</legend>
 			<div class="flex flex-wrap gap-2">
-				<button type="button" class="chip" aria-pressed={!p.minRating} onclick={() => apply({ minRating: null })}>
+				<button
+					type="button"
+					class="chip"
+					aria-pressed={!p.minRating}
+					onclick={() => apply({ minRating: null })}
+				>
 					Alle
 				</button>
 				{#each [1, 2, 3, 4, 5] as stars (stars)}
@@ -200,7 +228,8 @@
 					id="year"
 					class="input w-36"
 					value={p.year ? String(p.year) : ''}
-					onchange={(e) => apply({ year: e.currentTarget.value ? Number(e.currentTarget.value) : null })}
+					onchange={(e) =>
+						apply({ year: e.currentTarget.value ? Number(e.currentTarget.value) : null })}
 				>
 					<option value="">Alle Jahre</option>
 					{#each data.years as year (year)}
@@ -235,7 +264,9 @@
 		{p.q ? `Keine Treffer für „${p.q}“.` : 'Keine Einträge passen zu diesen Filtern.'}
 		{#snippet actions()}
 			{#if p.q || activeFilters || p.category}
-				<a href="/browse" class="btn btn-secondary" data-sveltekit-replacestate>Alles zurücksetzen</a>
+				<a href="/browse" class="btn btn-secondary" data-sveltekit-replacestate
+					>Alles zurücksetzen</a
+				>
 			{:else}
 				<a href="/new" class="btn btn-primary">Ersten Eintrag anlegen</a>
 			{/if}
@@ -245,10 +276,15 @@
 	<ul class="grid grid-cols-2 gap-3 sm:grid-cols-3">
 		{#each data.results as entry (entry.id)}
 			<li>
-				<a href="/entries/{entry.id}" class="card block h-full overflow-hidden transition hover:shadow-float">
+				<a
+					href="/entries/{entry.id}"
+					class="card block h-full overflow-hidden transition hover:shadow-float"
+				>
 					<Cover {entry} category={entry.category} size="fill" />
 					<div class="p-3">
-						<h2 class="line-clamp-2 font-sans text-sm leading-snug font-semibold tracking-normal">{entry.title}</h2>
+						<h2 class="line-clamp-2 font-sans text-sm leading-snug font-semibold tracking-normal">
+							{entry.title}
+						</h2>
 						<p class="mt-0.5 text-xs text-muted">{formatDate(entry.experiencedAt)}</p>
 						<Stars rating={entry.rating} class="mt-1" />
 					</div>
@@ -266,7 +302,12 @@
 
 {#if data.results.length < data.total}
 	<div class="mt-5 flex justify-center">
-		<a href={moreHref()} class="btn btn-secondary" data-sveltekit-reset="false" data-sveltekit-replacestate>
+		<a
+			href={moreHref()}
+			class="btn btn-secondary"
+			data-sveltekit-reset="false"
+			data-sveltekit-replacestate
+		>
 			Mehr laden ({data.total - data.results.length} weitere)
 		</a>
 	</div>

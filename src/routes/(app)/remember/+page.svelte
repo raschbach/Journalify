@@ -53,15 +53,18 @@
 	{:else}
 		{#if data.memories.mode === 'week'}
 			<p class="mb-3 text-sm text-muted">
-				Am {formatDayMonth(data.today)} gab es nichts – aber in dieser Kalenderwoche (KW {isoWeek(data.today).week}) früherer
-				Jahre:
+				Am {formatDayMonth(data.today)} gab es nichts – aber in dieser Kalenderwoche (KW {isoWeek(
+					data.today
+				).week}) früherer Jahre:
 			</p>
 		{/if}
 		<div class="space-y-5">
 			{#each data.memories.groups as group (group.yearsAgo)}
 				<div>
 					<h3 class="mb-2 flex items-center gap-2 font-sans text-sm font-bold text-ink-soft">
-						<span class="rounded-full bg-gold-soft px-2.5 py-0.5 text-gold">{yearsAgoLabel(group.yearsAgo)}</span>
+						<span class="rounded-full bg-gold-soft px-2.5 py-0.5 text-gold"
+							>{yearsAgoLabel(group.yearsAgo)}</span
+						>
 						<span class="font-normal text-muted">{group.year}</span>
 					</h3>
 					<ul class="space-y-3">
@@ -79,7 +82,11 @@
 <section class="mb-9" aria-labelledby="random-memory">
 	<h2 id="random-memory" class="section-title mb-3">Zufällige Erinnerung</h2>
 
-	<div class="scrollbar-none -mx-4 mb-3 flex gap-2 overflow-x-auto px-4 pb-1" role="group" aria-label="Nach Kategorie filtern">
+	<div
+		class="-mx-4 mb-3 flex scrollbar-none gap-2 overflow-x-auto px-4 pb-1"
+		role="group"
+		aria-label="Nach Kategorie filtern"
+	>
 		<a
 			href={randomHref(null)}
 			class="chip"
@@ -103,10 +110,7 @@
 
 	{#if random}
 		{#key random.id}
-			<article
-				class="card overflow-hidden"
-				in:slide={{ duration: 250 }}
-			>
+			<article class="card overflow-hidden" in:slide={{ duration: 250 }}>
 				<div class="cat-tint relative px-5 pt-5 pb-4" style:--cat={random.category.color}>
 					<div class="flex items-start gap-4">
 						<Cover entry={random} category={random.category} size="lg" class="shadow-card" />
@@ -117,7 +121,9 @@
 							</p>
 							<h3 class="mt-1 text-2xl leading-tight font-semibold break-words">{random.title}</h3>
 							{#if random.creator || random.year}
-								<p class="mt-0.5 text-sm text-ink-soft">{[random.creator, random.year].filter(Boolean).join(' · ')}</p>
+								<p class="mt-0.5 text-sm text-ink-soft">
+									{[random.creator, random.year].filter(Boolean).join(' · ')}
+								</p>
 							{/if}
 							<p class="mt-2 text-sm text-ink-soft">{formatDateLong(random.experiencedAt)}</p>
 							<Stars rating={random.rating} size="md" class="mt-1" />
@@ -136,21 +142,26 @@
 				<div class="flex gap-2 p-4">
 					<a
 						href={randomHref(data.filter, random.id)}
-						class="btn btn-primary flex-1"
+						class="btn btn-primary flex-1 px-3 whitespace-nowrap"
 						data-sveltekit-reset="false"
 						data-sveltekit-replacestate
 					>
 						<Icon name="shuffle" size={18} /> Noch eine
 					</a>
-					<a href="/entries/{random.id}" class="btn btn-secondary flex-1">
+					<a href="/entries/{random.id}" class="btn btn-secondary flex-1 px-3 whitespace-nowrap">
 						{random.notes ? 'Ansehen' : 'Notiz ergänzen'}
 					</a>
 				</div>
 			</article>
 		{/key}
 	{:else}
-		<EmptyState emoji="🎲" title={data.filter ? 'Keine Einträge in dieser Kategorie' : 'Noch keine Einträge'}>
-			{data.filter ? 'Wähle eine andere Kategorie.' : 'Sobald du Erlebnisse einträgst, ziehen wir hier zufällig eins.'}
+		<EmptyState
+			emoji="🎲"
+			title={data.filter ? 'Keine Einträge in dieser Kategorie' : 'Noch keine Einträge'}
+		>
+			{data.filter
+				? 'Wähle eine andere Kategorie.'
+				: 'Sobald du Erlebnisse einträgst, ziehen wir hier zufällig eins.'}
 		</EmptyState>
 	{/if}
 </section>
@@ -164,7 +175,10 @@
 				<span class="text-xs font-bold tracking-wider text-muted uppercase">{item.title}</span>
 				<span class="mt-0.5 font-display text-lg font-semibold">{item.label}</span>
 				<span class="mt-3 flex items-center gap-3 text-sm text-ink-soft">
-					<span><strong class="text-ink">{item.p.count}</strong> {item.p.count === 1 ? 'Erlebnis' : 'Erlebnisse'}</span>
+					<span
+						><strong class="text-ink">{item.p.count}</strong>
+						{item.p.count === 1 ? 'Erlebnis' : 'Erlebnisse'}</span
+					>
 					<span>Ø <strong class="text-ink">{avg(item.p.averageRating)}</strong> ★</span>
 					<span><strong class="text-ink">{item.p.xp}</strong> XP</span>
 				</span>

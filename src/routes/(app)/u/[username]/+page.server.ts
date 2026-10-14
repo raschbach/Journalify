@@ -1,6 +1,12 @@
 import { error, redirect } from '@sveltejs/kit';
 import { and, eq } from 'drizzle-orm';
-import { areFriends, requireUser, selectSummaries, toSummary, newestFirst } from '#lib/server/data.ts';
+import {
+	areFriends,
+	requireUser,
+	selectSummaries,
+	toSummary,
+	newestFirst
+} from '#lib/server/data.ts';
 import { db } from '#lib/server/db/index.ts';
 import { entries, users } from '#lib/server/db/schema.ts';
 import { loadProfileStats } from '#lib/server/profile.ts';

@@ -83,6 +83,7 @@ export function flashXp(
 		message,
 		tone: 'success',
 		xp: gained > 0 ? gained : undefined,
-		levelUp: levelAfter > levelBefore ? { level: levelAfter, title: levelTitle(levelAfter) } : undefined
+		levelUp:
+			levelAfter > levelBefore ? { level: levelAfter, title: levelTitle(levelAfter) } : undefined
 	});
 }

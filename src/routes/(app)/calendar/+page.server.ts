@@ -1,5 +1,12 @@
 import { and, asc, eq, gte, lte } from 'drizzle-orm';
-import { addDays, isValidMonthKey, monthKey, monthRange, startOfWeek, todayISO } from '#lib/dates.ts';
+import {
+	addDays,
+	isValidMonthKey,
+	monthKey,
+	monthRange,
+	startOfWeek,
+	todayISO
+} from '#lib/dates.ts';
 import { requireUser, selectSummaries, toSummary } from '#lib/server/data.ts';
 import { entries } from '#lib/server/db/schema.ts';
 import type { PageServerLoad } from './$types';
@@ -30,6 +37,7 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 		gridStart,
 		gridEnd,
 		entries: rows.map((r) => toSummary(r)),
-		selected: selectedParam && selectedParam >= gridStart && selectedParam <= gridEnd ? selectedParam : null
+		selected:
+			selectedParam && selectedParam >= gridStart && selectedParam <= gridEnd ? selectedParam : null
 	};
 };

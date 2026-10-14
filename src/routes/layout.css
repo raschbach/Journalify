@@ -163,7 +163,7 @@
 	}
 
 	.input {
-		@apply block min-h-11 w-full rounded-xl border border-line bg-surface px-3.5 py-2 text-ink placeholder:text-muted/80 transition outline-none;
+		@apply block min-h-11 w-full rounded-xl border border-line bg-surface px-3.5 py-2 text-ink transition outline-none placeholder:text-muted/80;
 	}
 	.input:focus {
 		border-color: var(--ink-soft);

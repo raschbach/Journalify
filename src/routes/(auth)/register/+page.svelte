@@ -68,7 +68,8 @@
 			<p class="field-error" id="username-hint">{form.errors.username}</p>
 		{:else}
 			<p class="mt-1.5 text-xs text-muted" id="username-hint">
-				Über diesen Namen können dich Freund:innen hinzufügen. Kleinbuchstaben, Ziffern, „.“ und „_“.
+				Über diesen Namen können dich Freund:innen hinzufügen. Kleinbuchstaben, Ziffern, „.“ und
+				„_“.
 			</p>
 		{/if}
 	</div>
@@ -94,6 +95,8 @@
 	</button>
 
 	<p class="text-center text-sm text-muted">
-		Schon dabei? <a class="font-semibold text-ink underline underline-offset-4" href="/login">Anmelden</a>
+		Schon dabei? <a class="font-semibold text-ink underline underline-offset-4" href="/login"
+			>Anmelden</a
+		>
 	</p>
 </form>

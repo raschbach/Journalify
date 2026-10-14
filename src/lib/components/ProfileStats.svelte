@@ -50,8 +50,13 @@
 			></div>
 		</div>
 		<p class="mt-2 flex justify-between gap-2 text-sm text-muted">
-			<span class="tabular-nums">{fmt(level.xpIntoLevel)} / {fmt(level.nextLevelAt - level.levelStart)} XP</span>
-			<span>noch <strong class="text-ink">{fmt(level.xpToNext)} XP</strong> bis Level {level.level + 1}</span>
+			<span class="tabular-nums"
+				>{fmt(level.xpIntoLevel)} / {fmt(level.nextLevelAt - level.levelStart)} XP</span
+			>
+			<span
+				>noch <strong class="text-ink">{fmt(level.xpToNext)} XP</strong> bis Level {level.level +
+					1}</span
+			>
 		</p>
 	</div>
 </section>
@@ -63,7 +68,9 @@
 		<p class="text-xs text-muted">Einträge</p>
 	</div>
 	<div class="card p-3.5 text-center">
-		<p class="font-display text-3xl font-semibold">{avg}<span class="text-xl text-gold"> ★</span></p>
+		<p class="font-display text-3xl font-semibold">
+			{avg}<span class="text-xl text-gold"> ★</span>
+		</p>
 		<p class="text-xs text-muted">Ø Bewertung</p>
 	</div>
 	<div class="card p-3.5 text-center">
@@ -74,13 +81,17 @@
 
 {#if stats.perCategory.length}
 	<section class="card mt-4 p-4" aria-labelledby="stats-per-category">
-		<h2 id="stats-per-category" class="mb-3 font-sans text-sm font-bold text-ink-soft">Einträge pro Kategorie</h2>
+		<h2 id="stats-per-category" class="mb-3 font-sans text-sm font-bold text-ink-soft">
+			Einträge pro Kategorie
+		</h2>
 		<ul class="space-y-2.5">
 			{#each stats.perCategory as row (row.categoryId)}
 				{@const cat = categories.find((c) => c.id === row.categoryId)}
 				{#if cat}
 					<li class="flex items-center gap-3 text-sm">
-						<span class="w-32 shrink-0 truncate sm:w-44"><span aria-hidden="true">{cat.emoji}</span> {cat.name}</span>
+						<span class="w-32 shrink-0 truncate sm:w-44"
+							><span aria-hidden="true">{cat.emoji}</span> {cat.name}</span
+						>
 						<span class="h-2.5 flex-1 overflow-hidden rounded-full bg-surface-2">
 							<span
 								class="block h-full rounded-full"

@@ -49,7 +49,12 @@ export const BUILTIN_CATEGORIES: BuiltinCategory[] = [
 				type: 'select',
 				options: ['Kino', 'Streaming', 'TV', 'Disc']
 			},
-			{ key: 'venue', label: 'Kino bzw. Plattform', type: 'text', placeholder: 'z. B. Yorck Kino, Netflix' },
+			{
+				key: 'venue',
+				label: 'Kino bzw. Plattform',
+				type: 'text',
+				placeholder: 'z. B. Yorck Kino, Netflix'
+			},
 			{ key: 'version', label: 'Fassung', type: 'select', options: ['OV', 'Synchro', 'OmU'] },
 			WITH_WHOM
 		]
@@ -98,7 +103,12 @@ export const BUILTIN_CATEGORIES: BuiltinCategory[] = [
 		fields: [
 			{ key: 'kind', label: 'Art', type: 'select', options: ['Album', 'Song', 'Playlist'] },
 			{ key: 'genre', label: 'Genre', type: 'text' },
-			{ key: 'occasion', label: 'Anlass', type: 'text', placeholder: 'z. B. Sonntagmorgen, Roadtrip' }
+			{
+				key: 'occasion',
+				label: 'Anlass',
+				type: 'text',
+				placeholder: 'z. B. Sonntagmorgen, Roadtrip'
+			}
 		]
 	},
 	{

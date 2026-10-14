@@ -2,13 +2,9 @@ import { z } from 'zod';
 
 export const USERNAME_PATTERN = /^[a-z0-9_.]{3,24}$/;
 
-export const usernameSchema = z
-	.string()
-	.trim()
-	.toLowerCase()
-	.regex(USERNAME_PATTERN, {
-		error: '3–24 Zeichen: Kleinbuchstaben, Ziffern, Punkt oder Unterstrich.'
-	});
+export const usernameSchema = z.string().trim().toLowerCase().regex(USERNAME_PATTERN, {
+	error: '3–24 Zeichen: Kleinbuchstaben, Ziffern, Punkt oder Unterstrich.'
+});
 
 export const passwordSchema = z
 	.string()

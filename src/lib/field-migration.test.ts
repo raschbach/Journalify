@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { convertValue, migrateEntryFields, slugify, uniqueSlug, type MigrationField } from './field-migration';
+import {
+	convertValue,
+	migrateEntryFields,
+	slugify,
+	uniqueSlug,
+	type MigrationField
+} from './field-migration';
 
 const f = (partial: Partial<MigrationField> & { id: string }): MigrationField => ({
 	key: partial.id,
@@ -14,7 +20,10 @@ describe('Feld-Migration', () => {
 		const result = migrateEntryFields(
 			{ platform: 'PC', hours: 12 },
 			[],
-			[f({ id: 'platform', label: 'Plattform' }), f({ id: 'hours', label: 'Spielzeit', type: 'number' })],
+			[
+				f({ id: 'platform', label: 'Plattform' }),
+				f({ id: 'hours', label: 'Spielzeit', type: 'number' })
+			],
 			[f({ id: 'hours', label: 'Spielzeit', type: 'number' })]
 		);
 		expect(result.fieldValues).toEqual({ hours: 12 });

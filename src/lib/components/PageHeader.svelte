@@ -15,7 +15,15 @@
 		actions?: Snippet;
 	}
 
-	let { title, subtitle, back, backLabel = 'Zurück', historyBack = false, replace = false, actions }: Props = $props();
+	let {
+		title,
+		subtitle,
+		back,
+		backLabel = 'Zurück',
+		historyBack = false,
+		replace = false,
+		actions
+	}: Props = $props();
 </script>
 
 <header class="mb-5 flex items-start gap-2">

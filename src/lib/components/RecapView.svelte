@@ -64,7 +64,8 @@
 <nav class="-mt-2 mb-6 flex items-center justify-between gap-2" aria-label="Zeitraum wechseln">
 	{#if data.prev}
 		<a href={href(data.prev)} class="btn btn-secondary" data-sveltekit-replacestate>
-			<Icon name="chevron-left" size={18} /> {label(data.prev)}
+			<Icon name="chevron-left" size={18} />
+			{label(data.prev)}
 		</a>
 	{:else}
 		<span></span>
@@ -74,7 +75,8 @@
 	</span>
 	{#if data.next}
 		<a href={href(data.next)} class="btn btn-secondary" data-sveltekit-replacestate>
-			{label(data.next)} <Icon name="chevron-right" size={18} />
+			{label(data.next)}
+			<Icon name="chevron-right" size={18} />
 		</a>
 	{:else}
 		<span></span>
@@ -96,7 +98,9 @@
 			<p class="text-xs text-muted">{recap.count === 1 ? 'Erlebnis' : 'Erlebnisse'}</p>
 		</div>
 		<div class="card p-3.5 text-center">
-			<p class="font-display text-3xl font-semibold">{avg}<span class="text-xl text-gold"> ★</span></p>
+			<p class="font-display text-3xl font-semibold">
+				{avg}<span class="text-xl text-gold"> ★</span>
+			</p>
 			<p class="text-xs text-muted">Ø Bewertung</p>
 		</div>
 		<div class="card p-3.5 text-center">
@@ -113,7 +117,9 @@
 				{@const cat = categoryOf(row.categoryId)}
 				{#if cat}
 					<li class="flex items-center gap-3 text-sm">
-						<span class="w-32 shrink-0 truncate sm:w-40"><span aria-hidden="true">{cat.emoji}</span> {cat.name}</span>
+						<span class="w-32 shrink-0 truncate sm:w-40"
+							><span aria-hidden="true">{cat.emoji}</span> {cat.name}</span
+						>
 						<span class="h-2.5 flex-1 overflow-hidden rounded-full bg-surface-2">
 							<span
 								class="block h-full rounded-full"
@@ -144,8 +150,13 @@
 				</a>
 			{/if}
 			{#if recap.longestNote}
-				<a href="/entries/{recap.longestNote.entry.id}" class="card block p-4 transition hover:shadow-float">
-					<p class="flex items-center gap-1.5 text-xs font-bold tracking-wider text-muted uppercase">
+				<a
+					href="/entries/{recap.longestNote.entry.id}"
+					class="card block p-4 transition hover:shadow-float"
+				>
+					<p
+						class="flex items-center gap-1.5 text-xs font-bold tracking-wider text-muted uppercase"
+					>
 						<Icon name="note" size={15} /> Längste Notiz · {recap.longestNote.length} Zeichen
 					</p>
 					<p class="mt-1.5 font-semibold">
@@ -160,8 +171,9 @@
 
 	{#if notesCount < recap.count}
 		<p class="mt-4 rounded-2xl bg-gold-soft px-4 py-3 text-sm text-ink-soft">
-			✍️ {recap.count - notesCount} {recap.count - notesCount === 1 ? 'Eintrag hat' : 'Einträge haben'} noch keine
-			Notiz – jede bringt dir +20 XP.
+			✍️ {recap.count - notesCount}
+			{recap.count - notesCount === 1 ? 'Eintrag hat' : 'Einträge haben'} noch keine Notiz – jede bringt
+			dir +20 XP.
 		</p>
 	{/if}
 
@@ -175,4 +187,3 @@
 		</ul>
 	</section>
 {/if}
-

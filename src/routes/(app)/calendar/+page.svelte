@@ -33,9 +33,7 @@
 	});
 
 	const selected = $derived(
-		selectedOverride ??
-			data.selected ??
-			(monthKey(data.today) === data.month ? data.today : null)
+		selectedOverride ?? data.selected ?? (monthKey(data.today) === data.month ? data.today : null)
 	);
 
 	const days = $derived.by(() => {
@@ -67,7 +65,9 @@
 		return [...map.values()].sort((a, b) => b.count - a.count);
 	});
 
-	const monthCount = $derived(visible.filter((e) => monthKey(e.experiencedAt) === data.month).length);
+	const monthCount = $derived(
+		visible.filter((e) => monthKey(e.experiencedAt) === data.month).length
+	);
 	const selectedEntries = $derived(selected ? (byDay.get(selected) ?? []) : []);
 
 	const prevHref = $derived(`?m=${addMonths(data.month, -1)}`);
@@ -130,21 +130,38 @@
 		</p>
 	</div>
 	{#if !isCurrentMonth}
-		<a href="/calendar" class="btn btn-secondary mr-1 h-10 min-h-10 px-3 text-sm" data-sveltekit-replacestate data-sveltekit-reset="false">
+		<a
+			href="/calendar"
+			class="btn btn-secondary mr-1 h-10 min-h-10 px-3 text-sm"
+			data-sveltekit-replacestate
+			data-sveltekit-reset="false"
+		>
 			Heute
 		</a>
 	{/if}
-	<a href={prevHref} class="btn-icon" aria-label="Vorheriger Monat" data-sveltekit-replacestate data-sveltekit-reset="false">
+	<a
+		href={prevHref}
+		class="btn-icon"
+		aria-label="Vorheriger Monat"
+		data-sveltekit-replacestate
+		data-sveltekit-reset="false"
+	>
 		<Icon name="chevron-left" size={22} />
 	</a>
-	<a href={nextHref} class="btn-icon" aria-label="Nächster Monat" data-sveltekit-replacestate data-sveltekit-reset="false">
+	<a
+		href={nextHref}
+		class="btn-icon"
+		aria-label="Nächster Monat"
+		data-sveltekit-replacestate
+		data-sveltekit-reset="false"
+	>
 		<Icon name="chevron-right" size={22} />
 	</a>
 </header>
 
 {#if legend.length}
 	<div
-		class="scrollbar-none -mx-4 mb-3 flex gap-2 overflow-x-auto px-4 pb-1"
+		class="-mx-4 mb-3 flex scrollbar-none gap-2 overflow-x-auto px-4 pb-1"
 		role="group"
 		aria-label="Kategorien ein- und ausblenden"
 	>
@@ -171,7 +188,13 @@
 	</div>
 {/if}
 
-<div class="card select-none p-1.5 sm:p-2" role="group" aria-label="Monatsansicht {formatMonth(data.month)}" {ontouchstart} {ontouchend}>
+<div
+	class="card p-1.5 select-none sm:p-2"
+	role="group"
+	aria-label="Monatsansicht {formatMonth(data.month)}"
+	{ontouchstart}
+	{ontouchend}
+>
 	<div class="grid grid-cols-7 pb-1" aria-hidden="true">
 		{#each WEEKDAYS_SHORT as wd (wd)}
 			<div class="py-1.5 text-center text-xs font-semibold text-muted">{wd}</div>
@@ -220,11 +243,14 @@
 							class="cat-tint truncate rounded-md px-1 py-px text-left text-[0.7rem] font-medium text-ink"
 							style:--cat={entry.category.color}
 						>
-							{entry.category.emoji} {entry.title}
+							{entry.category.emoji}
+							{entry.title}
 						</span>
 					{/each}
 					{#if list.length > 2}
-						<span class="px-1 text-left text-[0.7rem] font-semibold opacity-70">+{list.length - 2} weitere</span>
+						<span class="px-1 text-left text-[0.7rem] font-semibold opacity-70"
+							>+{list.length - 2} weitere</span
+						>
 					{/if}
 				</span>
 			</button>
@@ -248,7 +274,9 @@
 				{/each}
 			</ul>
 		{:else}
-			<EmptyState emoji="🗓️" title="Nichts eingetragen">An diesem Tag ist noch nichts verzeichnet.</EmptyState>
+			<EmptyState emoji="🗓️" title="Nichts eingetragen"
+				>An diesem Tag ist noch nichts verzeichnet.</EmptyState
+			>
 		{/if}
 	{:else}
 		<p class="rounded-2xl bg-surface-2 px-4 py-6 text-center text-sm text-muted">

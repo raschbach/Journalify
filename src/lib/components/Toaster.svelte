@@ -32,7 +32,11 @@
 					toast.tone === 'error' ? 'bg-danger text-white' : 'bg-primary-ink/15'
 				]}
 			>
-				<Icon name={toast.tone === 'error' ? 'x' : toast.tone === 'info' ? 'info' : 'check'} size={16} strokeWidth={2.5} />
+				<Icon
+					name={toast.tone === 'error' ? 'x' : toast.tone === 'info' ? 'info' : 'check'}
+					size={16}
+					strokeWidth={2.5}
+				/>
 			</span>
 			<p class="min-w-0 flex-1 text-sm font-medium">{toast.message}</p>
 			{#if toast.xp}

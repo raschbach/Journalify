@@ -16,8 +16,18 @@ function scryptAsync(password: string, salt: Buffer, keylen: number, options: Sc
 
 export async function hashPassword(password: string): Promise<string> {
 	const salt = randomBytes(16);
-	const key = await scryptAsync(password, salt, KEY_LENGTH, { ...PARAMS, maxmem: 64 * 1024 * 1024 });
-	return ['scrypt', PARAMS.N, PARAMS.r, PARAMS.p, salt.toString('base64'), key.toString('base64')].join('$');
+	const key = await scryptAsync(password, salt, KEY_LENGTH, {
+		...PARAMS,
+		maxmem: 64 * 1024 * 1024
+	});
+	return [
+		'scrypt',
+		PARAMS.N,
+		PARAMS.r,
+		PARAMS.p,
+		salt.toString('base64'),
+		key.toString('base64')
+	].join('$');
 }
 
 export async function verifyPassword(password: string, stored: string): Promise<boolean> {

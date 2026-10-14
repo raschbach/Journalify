@@ -51,14 +51,23 @@
 
 <section class="mb-5">
 	<h1 class="text-[1.9rem] leading-tight font-semibold">{greeting}, {firstName}!</h1>
-	<a href="/profile" class="mt-2 flex items-center gap-3 rounded-xl py-1 text-sm" aria-label="Level {level.level}: {level.title}, {level.xp} XP – zum Profil">
+	<a
+		href="/profile"
+		class="mt-2 flex items-center gap-3 rounded-xl py-1 text-sm"
+		aria-label="Level {level.level}: {level.title}, {level.xp} XP – zum Profil"
+	>
 		<span class="font-semibold whitespace-nowrap">
 			<span class="text-gold">★</span> Level {level.level} · {level.title}
 		</span>
 		<span class="h-2 min-w-12 flex-1 overflow-hidden rounded-full bg-surface-3">
-			<span class="block h-full rounded-full bg-gold" style:width="{Math.round(level.progress * 100)}%"></span>
+			<span
+				class="block h-full rounded-full bg-gold"
+				style:width="{Math.round(level.progress * 100)}%"
+			></span>
 		</span>
-		<span class="whitespace-nowrap text-muted tabular-nums">{level.xpToNext} XP bis Lvl {level.level + 1}</span>
+		<span class="whitespace-nowrap text-muted tabular-nums"
+			>{level.xpToNext} XP bis Lvl {level.level + 1}</span
+		>
 	</a>
 </section>
 
@@ -89,7 +98,9 @@
 					<span class="text-2xl" aria-hidden="true">{recap.type === 'week' ? '🗞️' : '📅'}</span>
 					<a href="/remember/{recap.type}/{recap.key}" class="min-w-0 flex-1">
 						<span class="block font-semibold">
-							{recap.type === 'week' ? 'Dein Wochenrückblick ist da' : `Dein ${formatMonth(recap.key).split(' ')[0]}-Rückblick ist da`}
+							{recap.type === 'week'
+								? 'Dein Wochenrückblick ist da'
+								: `Dein ${formatMonth(recap.key).split(' ')[0]}-Rückblick ist da`}
 						</span>
 						<span class="block text-sm text-ink-soft">
 							{recap.type === 'week' ? formatRange(recap.start, recap.end) : formatMonth(recap.key)} ·
@@ -99,7 +110,9 @@
 					</a>
 					<form method="POST" action="?/dismissRecap" use:enhance>
 						<input type="hidden" name="type" value={recap.type} />
-						<button class="btn-icon" aria-label="Hinweis ausblenden"><Icon name="x" size={18} /></button>
+						<button class="btn-icon" aria-label="Hinweis ausblenden"
+							><Icon name="x" size={18} /></button
+						>
 					</form>
 				</div>
 			{/if}
@@ -107,7 +120,9 @@
 	</div>
 {/if}
 
-<div class="sticky top-[calc(3.5rem+env(safe-area-inset-top))] z-30 -mx-4 mb-4 bg-bg/90 px-4 py-2 backdrop-blur-md">
+<div
+	class="sticky top-[calc(3.5rem+env(safe-area-inset-top))] z-30 -mx-4 mb-4 bg-bg/90 px-4 py-2 backdrop-blur-md"
+>
 	<div class="grid grid-cols-2 gap-1 rounded-2xl bg-surface-2 p-1" role="tablist" aria-label="Feed">
 		{#each [{ id: 'me', label: 'Ich', href: '/' }, { id: 'friends', label: 'Freunde', href: '/?feed=friends' }] as tab (tab.id)}
 			<a
@@ -131,17 +146,21 @@
 	{#if data.feed.length === 0}
 		{#if data.tab === 'me'}
 			<EmptyState emoji="📓" title="Dein Logbuch ist noch leer">
-				Trag dein erstes Erlebnis ein – einen Film von gestern, das Buch auf deinem Nachttisch oder das letzte
-				Konzert.
+				Trag dein erstes Erlebnis ein – einen Film von gestern, das Buch auf deinem Nachttisch oder
+				das letzte Konzert.
 				{#snippet actions()}
-					<a href="/new" class="btn btn-primary"><Icon name="plus" size={18} /> Ersten Eintrag anlegen</a>
+					<a href="/new" class="btn btn-primary"
+						><Icon name="plus" size={18} /> Ersten Eintrag anlegen</a
+					>
 				{/snippet}
 			</EmptyState>
 		{:else if data.friendCount === 0}
 			<EmptyState emoji="👋" title="Noch keine Freund:innen">
 				Füge Freund:innen über ihren Benutzernamen hinzu. Dann siehst du hier, was sie erleben.
 				{#snippet actions()}
-					<a href="/friends" class="btn btn-primary"><Icon name="user-plus" size={18} /> Freund:in hinzufügen</a>
+					<a href="/friends" class="btn btn-primary"
+						><Icon name="user-plus" size={18} /> Freund:in hinzufügen</a
+					>
 				{/snippet}
 			</EmptyState>
 		{:else}
@@ -153,7 +172,9 @@
 		{#each groups as group (group.key)}
 			<section class="mb-6" aria-label={group.label || undefined}>
 				{#if group.label}
-					<h2 class="mb-2 px-1 font-sans text-xs font-bold tracking-wider text-muted uppercase">{group.label}</h2>
+					<h2 class="mb-2 px-1 font-sans text-xs font-bold tracking-wider text-muted uppercase">
+						{group.label}
+					</h2>
 				{/if}
 				<ul class="space-y-3">
 					{#each group.items as entry (entry.id)}
@@ -165,13 +186,20 @@
 
 		{#if data.hasMore}
 			<div class="flex justify-center">
-				<a href={moreHref()} class="btn btn-secondary" data-sveltekit-reset="false" data-sveltekit-replacestate>
+				<a
+					href={moreHref()}
+					class="btn btn-secondary"
+					data-sveltekit-reset="false"
+					data-sveltekit-replacestate
+				>
 					Mehr laden
 				</a>
 			</div>
 		{:else if data.feed.length > 5}
 			<p class="py-4 text-center text-sm text-muted">
-				{data.tab === 'me' ? `Das waren alle ${data.totalCount} Einträge. ✨` : 'Du bist auf dem neuesten Stand. ✨'}
+				{data.tab === 'me'
+					? `Das waren alle ${data.totalCount} Einträge. ✨`
+					: 'Du bist auf dem neuesten Stand. ✨'}
 			</p>
 		{/if}
 	{/if}

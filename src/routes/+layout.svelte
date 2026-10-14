@@ -17,6 +17,7 @@
 
 <svelte:head>
 	<link rel="icon" href={favicon} type="image/svg+xml" />
+	<link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192" />
 	<title>Journalify</title>
 </svelte:head>
 

@@ -31,7 +31,9 @@ export function convertValue(value: FieldValue, field: MigrationField): FieldVal
 		case 'select':
 			return typeof value === 'string' && field.options?.includes(value) ? value : undefined;
 		default:
-			return TEXT_TYPES.includes(field.type) && typeof value !== 'boolean' ? String(value) : undefined;
+			return TEXT_TYPES.includes(field.type) && typeof value !== 'boolean'
+				? String(value)
+				: undefined;
 	}
 }
 

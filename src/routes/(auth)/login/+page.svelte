@@ -62,8 +62,9 @@
 	</button>
 
 	<p class="text-center text-sm text-muted">
-		Noch kein Konto? <a class="font-semibold text-ink underline underline-offset-4" href={registerHref}
-			>Registrieren</a
+		Noch kein Konto? <a
+			class="font-semibold text-ink underline underline-offset-4"
+			href={registerHref}>Registrieren</a
 		>
 	</p>
 </form>

@@ -42,16 +42,14 @@ export const load: PageServerLoad = async ({ locals, params }) => {
 			name: category.name,
 			emoji: category.emoji,
 			color: category.color,
-			fields: fields.map(
-				(f): EditorField => ({
-					id: f.id,
-					uid: f.id,
-					label: f.label,
-					type: f.type,
-					options: (f.options ?? []).join(', '),
-					placeholder: f.placeholder ?? ''
-				})
-			)
+			fields: fields.map((f): EditorField => ({
+				id: f.id,
+				uid: f.id,
+				label: f.label,
+				type: f.type,
+				options: (f.options ?? []).join(', '),
+				placeholder: f.placeholder ?? ''
+			}))
 		},
 		colors,
 		entryCount: await entryCount(user.id, category.id)
@@ -77,11 +75,15 @@ export const actions: Actions = {
 		const n = await entryCount(user.id, category.id);
 		const confirmed = (await request.formData()).get('confirmEntries') === 'on';
 		if (n > 0 && !confirmed) {
-			return fail(400, { deleteError: 'Bitte bestätige, dass auch die Einträge gelöscht werden sollen.' });
+			return fail(400, {
+				deleteError: 'Bitte bestätige, dass auch die Einträge gelöscht werden sollen.'
+			});
 		}
 		await deleteCategory(user.id, category.id);
 		setFlash(cookies, url, {
-			message: n ? `„${category.name}“ und ${n} ${n === 1 ? 'Eintrag' : 'Einträge'} gelöscht` : `„${category.name}“ gelöscht`,
+			message: n
+				? `„${category.name}“ und ${n} ${n === 1 ? 'Eintrag' : 'Einträge'} gelöscht`
+				: `„${category.name}“ gelöscht`,
 			tone: 'info'
 		});
 		redirect(303, '/categories');

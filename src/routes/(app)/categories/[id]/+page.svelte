@@ -33,7 +33,12 @@
 </PageHeader>
 
 {#key data.category.id}
-	<CategoryEditor initial={data.initial} colors={data.colors} errors={form?.errors} submitLabel="Änderungen speichern" />
+	<CategoryEditor
+		initial={data.initial}
+		colors={data.colors}
+		errors={form?.errors}
+		submitLabel="Änderungen speichern"
+	/>
 {/key}
 
 <ConfirmDialog
@@ -45,16 +50,27 @@
 	disabled={data.entryCount > 0 && !confirmEntries}
 >
 	{#if data.entryCount > 0}
-		In dieser Kategorie {data.entryCount === 1 ? 'gibt es 1 Eintrag' : `gibt es ${data.entryCount} Einträge`}. Sie
-		werden ebenfalls gelöscht – das kann nicht rückgängig gemacht werden.
+		In dieser Kategorie {data.entryCount === 1
+			? 'gibt es 1 Eintrag'
+			: `gibt es ${data.entryCount} Einträge`}. Sie werden ebenfalls gelöscht – das kann nicht
+		rückgängig gemacht werden.
 	{:else}
 		Die Kategorie hat keine Einträge und kann gefahrlos gelöscht werden.
 	{/if}
 	{#snippet fields()}
 		{#if data.entryCount > 0}
-			<label class="mt-4 flex cursor-pointer items-start gap-3 rounded-xl bg-danger-soft p-3 text-sm text-ink">
-				<input type="checkbox" name="confirmEntries" class="mt-0.5 size-5 accent-[var(--danger)]" bind:checked={confirmEntries} />
-				<span>Ja, auch {data.entryCount === 1 ? 'den Eintrag' : `alle ${data.entryCount} Einträge`} löschen.</span>
+			<label
+				class="mt-4 flex cursor-pointer items-start gap-3 rounded-xl bg-danger-soft p-3 text-sm text-ink"
+			>
+				<input
+					type="checkbox"
+					name="confirmEntries"
+					class="mt-0.5 size-5 accent-[var(--danger)]"
+					bind:checked={confirmEntries}
+				/>
+				<span
+					>Ja, auch {data.entryCount === 1 ? 'den Eintrag' : `alle ${data.entryCount} Einträge`} löschen.</span
+				>
 			</label>
 		{/if}
 		{#if form?.deleteError}<p class="field-error">{form.deleteError}</p>{/if}

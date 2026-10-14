@@ -35,7 +35,9 @@ export interface BrowseParams {
 
 export function parseBrowseParams(search: URLSearchParams): BrowseParams {
 	const sortRaw = search.get('sort');
-	const sort = (SORT_FIELDS as readonly string[]).includes(sortRaw ?? '') ? (sortRaw as SortField) : 'date';
+	const sort = (SORT_FIELDS as readonly string[]).includes(sortRaw ?? '')
+		? (sortRaw as SortField)
+		: 'date';
 	const dirRaw = search.get('dir');
 	const dir: SortDir = dirRaw === 'asc' || dirRaw === 'desc' ? dirRaw : DEFAULT_DIR[sort];
 	const min = Number(search.get('min'));

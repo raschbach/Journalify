@@ -61,7 +61,12 @@
 			<p class="mt-2 text-sm text-muted">
 				Deine Erinnerungen wachsen – weiter so. Jede Notiz bringt dich dem nächsten Level näher.
 			</p>
-			<button bind:this={button} type="button" class="btn btn-primary mt-6 w-full" onclick={onclose}>
+			<button
+				bind:this={button}
+				type="button"
+				class="btn btn-primary mt-6 w-full"
+				onclick={onclose}
+			>
 				Weiter
 			</button>
 		</div>

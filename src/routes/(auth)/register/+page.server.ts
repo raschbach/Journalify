@@ -51,7 +51,9 @@ export const actions: Actions = {
 
 		const id = randomUUID();
 		try {
-			await db.insert(users).values({ id, username, displayName, passwordHash: await hashPassword(password) });
+			await db
+				.insert(users)
+				.values({ id, username, displayName, passwordHash: await hashPassword(password) });
 		} catch {
 			// z. B. gleichzeitige Registrierung mit demselben Namen
 			return fail(400, { values, errors: taken });
@@ -60,7 +62,10 @@ export const actions: Actions = {
 		const token = generateSessionToken();
 		const session = await createSession(token, id);
 		setSessionCookie(cookies, url, token, session.expiresAt);
-		setFlash(cookies, url, { message: `Willkommen bei Journalify, ${displayName}!`, tone: 'success' });
+		setFlash(cookies, url, {
+			message: `Willkommen bei Journalify, ${displayName}!`,
+			tone: 'success'
+		});
 
 		redirect(303, safeRedirect(url.searchParams.get('redirectTo')));
 	}

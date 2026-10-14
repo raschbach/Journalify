@@ -23,23 +23,31 @@
 <ProfileStats level={data.level} stats={data.stats} categories={data.categories} />
 
 <details class="group card mt-4 overflow-hidden">
-	<summary class="flex min-h-14 cursor-pointer list-none items-center gap-3 px-4 font-semibold [&::-webkit-details-marker]:hidden">
+	<summary
+		class="flex min-h-14 cursor-pointer list-none items-center gap-3 px-4 font-semibold [&::-webkit-details-marker]:hidden"
+	>
 		<span class="text-gold">✦</span>
 		<span class="flex-1">So sammelst du XP</span>
 		<Icon name="chevron-down" class="text-muted transition-transform group-open:rotate-180" />
 	</summary>
 	<ul class="space-y-2 border-t border-line px-4 py-4 text-sm">
-		<li class="flex justify-between gap-4"><span>Eintrag erstellt</span><strong>+{XP_RULES.entry} XP</strong></li>
-		<li class="flex justify-between gap-4"><span>Bewertung vergeben</span><strong>+{XP_RULES.rating} XP</strong></li>
+		<li class="flex justify-between gap-4">
+			<span>Eintrag erstellt</span><strong>+{XP_RULES.entry} XP</strong>
+		</li>
+		<li class="flex justify-between gap-4">
+			<span>Bewertung vergeben</span><strong>+{XP_RULES.rating} XP</strong>
+		</li>
 		<li class="flex justify-between gap-4">
 			<span>Notiz (ab {NOTE_MIN_LENGTH} Zeichen)</span><strong>+{XP_RULES.note} XP</strong>
 		</li>
 		<li class="flex justify-between gap-4">
-			<span>Ausführliche Notiz (ab {LONG_NOTE_MIN_LENGTH} Zeichen)</span><strong>+{XP_RULES.longNote} XP</strong>
+			<span>Ausführliche Notiz (ab {LONG_NOTE_MIN_LENGTH} Zeichen)</span><strong
+				>+{XP_RULES.longNote} XP</strong
+			>
 		</li>
 		<li class="pt-1 text-muted">
-			XP werden immer aus deinen aktuellen Einträgen berechnet: Ergänzt du später eine Notiz, gibt es die XP dazu.
-			Löschst du einen Eintrag, werden seine XP abgezogen.
+			XP werden immer aus deinen aktuellen Einträgen berechnet: Ergänzt du später eine Notiz, gibt
+			es die XP dazu. Löschst du einen Eintrag, werden seine XP abgezogen.
 		</li>
 	</ul>
 </details>
@@ -61,7 +69,9 @@
 		<Icon name="chevron-right" class="text-muted" />
 	</a>
 	<form method="POST" action="/logout">
-		<button class="flex min-h-14 w-full cursor-pointer items-center gap-3 px-4 text-left text-danger hover:bg-danger-soft">
+		<button
+			class="flex min-h-14 w-full cursor-pointer items-center gap-3 px-4 text-left text-danger hover:bg-danger-soft"
+		>
 			<Icon name="logout" />
 			<span class="flex-1 font-semibold">Abmelden</span>
 		</button>

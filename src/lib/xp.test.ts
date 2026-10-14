@@ -70,7 +70,10 @@ describe('totalXp', () => {
 	});
 
 	it('bildet Bearbeiten und Löschen korrekt ab', () => {
-		const entries = [{ rating: null as number | null, notes: '' }, { rating: 4, notes: '' }];
+		const entries = [
+			{ rating: null as number | null, notes: '' },
+			{ rating: 4, notes: '' }
+		];
 		expect(totalXp(entries)).toBe(25);
 		entries[0].notes = text(40); // Notiz nachträglich ergänzt
 		expect(totalXp(entries)).toBe(45);

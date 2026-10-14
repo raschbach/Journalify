@@ -7,13 +7,7 @@
 	import { randomPrompt } from '../prompts';
 	import { toasts } from '../toast.svelte';
 	import type { CatalogResult, EntryFormValues, ExtraField, FormCategory } from '../types';
-	import {
-		entryXp,
-		LONG_NOTE_MIN_LENGTH,
-		NOTE_MIN_LENGTH,
-		noteLength,
-		XP_RULES
-	} from '../xp';
+	import { entryXp, LONG_NOTE_MIN_LENGTH, NOTE_MIN_LENGTH, noteLength, XP_RULES } from '../xp';
 	import CategoryIcon from './CategoryIcon.svelte';
 	import Icon from './Icon.svelte';
 	import StarInput from './StarInput.svelte';
@@ -40,7 +34,11 @@
 	const category = $derived(categories.find((c) => c.id === v.categoryId) ?? categories[0]);
 
 	// svelte-ignore state_referenced_locally
-	let prompt = $state(randomPrompt(initial.categoryId ? categories.find((c) => c.id === initial.categoryId)?.slug : undefined));
+	let prompt = $state(
+		randomPrompt(
+			initial.categoryId ? categories.find((c) => c.id === initial.categoryId)?.slug : undefined
+		)
+	);
 	let submitting = $state(false);
 	let saved = false;
 	let detailsOpen = $state(false);
@@ -60,14 +58,22 @@
 
 	$effect(() => {
 		// Fehler in den Details sichtbar machen
-		if (errors && Object.keys(errors).some((k) => k.startsWith('f.') || k.startsWith('extra') || ['creator', 'year', 'coverUrl'].includes(k))) {
+		if (
+			errors &&
+			Object.keys(errors).some(
+				(k) =>
+					k.startsWith('f.') || k.startsWith('extra') || ['creator', 'year', 'coverUrl'].includes(k)
+			)
+		) {
 			detailsOpen = true;
 		}
 	});
 
 	const noteHint = $derived.by(() => {
-		if (length === 0) return `Eine Notiz ab ${NOTE_MIN_LENGTH} Zeichen bringt +${XP_RULES.note} XP.`;
-		if (length < NOTE_MIN_LENGTH) return `Noch ${NOTE_MIN_LENGTH - length} Zeichen bis +${XP_RULES.note} XP.`;
+		if (length === 0)
+			return `Eine Notiz ab ${NOTE_MIN_LENGTH} Zeichen bringt +${XP_RULES.note} XP.`;
+		if (length < NOTE_MIN_LENGTH)
+			return `Noch ${NOTE_MIN_LENGTH - length} Zeichen bis +${XP_RULES.note} XP.`;
 		if (length < LONG_NOTE_MIN_LENGTH)
 			return `Noch ${LONG_NOTE_MIN_LENGTH - length} Zeichen bis +${XP_RULES.longNote} XP für eine ausführliche Notiz.`;
 		return 'Ausführliche Notiz – volle XP! ✨';
@@ -102,7 +108,10 @@
 		if (moved.length) {
 			v.extraFields = [...v.extraFields, ...moved];
 			detailsOpen = true;
-			toasts.show(`${moved.length === 1 ? 'Ein Feld wurde' : `${moved.length} Felder wurden`} als eigenes Feld übernommen.`, { tone: 'info' });
+			toasts.show(
+				`${moved.length === 1 ? 'Ein Feld wurde' : `${moved.length} Felder wurden`} als eigenes Feld übernommen.`,
+				{ tone: 'info' }
+			);
 		}
 		v.catalogItemId = null;
 		v.catalogLabel = null;
@@ -282,8 +291,7 @@
 				placeholder={prompt}
 				bind:value={v.notes}
 				aria-describedby="notes-hint"
-				aria-invalid={err('notes') ? 'true' : undefined}
-			></textarea>
+				aria-invalid={err('notes') ? 'true' : undefined}></textarea>
 			{#if err('notes')}
 				<p class="field-error">{err('notes')}</p>
 			{:else}
@@ -389,17 +397,21 @@
 										rows="3"
 										placeholder={field.placeholder ?? ''}
 										value={String(v.fieldValues[field.key] ?? '')}
-										oninput={(e) => (v.fieldValues[field.key] = e.currentTarget.value)}
-									></textarea>
+										oninput={(e) => (v.fieldValues[field.key] = e.currentTarget.value)}></textarea>
 								{:else}
 									<input
 										class="input"
 										{id}
 										{name}
-										type={field.type === 'number' ? 'number' : field.type === 'date' ? 'date' : 'text'}
+										type={field.type === 'number'
+											? 'number'
+											: field.type === 'date'
+												? 'date'
+												: 'text'}
 										inputmode={field.type === 'number' ? 'decimal' : undefined}
 										step={field.type === 'number' ? 'any' : undefined}
-										placeholder={field.placeholder ?? (field.type === 'people' ? 'Namen mit Komma trennen' : '')}
+										placeholder={field.placeholder ??
+											(field.type === 'people' ? 'Namen mit Komma trennen' : '')}
 										value={String(v.fieldValues[field.key] ?? '')}
 										oninput={(e) => (v.fieldValues[field.key] = e.currentTarget.value)}
 										aria-invalid={err(name) ? 'true' : undefined}
@@ -435,7 +447,9 @@
 										aria-label="Wert des eigenen Feldes {i + 1}"
 										bind:value={extra.value}
 									/>
-									{#if err(`extra.${i}`)}<p class="field-error -mt-1 sm:col-span-2">{err(`extra.${i}`)}</p>{/if}
+									{#if err(`extra.${i}`)}<p class="field-error -mt-1 sm:col-span-2">
+											{err(`extra.${i}`)}
+										</p>{/if}
 								</div>
 								<button
 									type="button"
@@ -468,7 +482,9 @@
 					{#if err('coverUrl')}
 						<p class="field-error">{err('coverUrl')}</p>
 					{:else}
-						<p class="mt-1.5 text-xs text-muted">Optional – sonst zeigen wir das Emoji der Kategorie.</p>
+						<p class="mt-1.5 text-xs text-muted">
+							Optional – sonst zeigen wir das Emoji der Kategorie.
+						</p>
 					{/if}
 				</div>
 			</div>
@@ -513,8 +529,12 @@
 			<div class="min-w-0 flex-1" aria-live="polite">
 				<p class="flex flex-wrap gap-x-2 text-xs font-semibold">
 					<span class="text-ink-soft">+{xp.entry} Eintrag</span>
-					<span class={xp.rating ? 'text-ink-soft' : 'text-muted/50 line-through'}>+{XP_RULES.rating} Bewertung</span>
-					<span class={xp.note ? 'text-ink-soft' : 'text-muted/50 line-through'}>+{XP_RULES.note} Notiz</span>
+					<span class={xp.rating ? 'text-ink-soft' : 'text-muted/50 line-through'}
+						>+{XP_RULES.rating} Bewertung</span
+					>
+					<span class={xp.note ? 'text-ink-soft' : 'text-muted/50 line-through'}
+						>+{XP_RULES.note} Notiz</span
+					>
 					{#if xp.note}
 						<span class={xp.longNote ? 'text-ink-soft' : 'text-muted/50 line-through'}
 							>+{XP_RULES.longNote} ausführlich</span
@@ -537,7 +557,9 @@
 			</div>
 			<button class="btn btn-primary min-w-32 px-6" disabled={submitting}>
 				{#if submitting}
-					<span class="size-4 animate-spin rounded-full border-2 border-current border-r-transparent"></span>
+					<span
+						class="size-4 animate-spin rounded-full border-2 border-current border-r-transparent"
+					></span>
 					Speichern …
 				{:else}
 					<Icon name="check" size={18} strokeWidth={2.5} /> Speichern

@@ -39,11 +39,12 @@
 		class="sticky top-0 z-40 border-b border-line/70 bg-bg/85 pt-[env(safe-area-inset-top)] backdrop-blur-md"
 	>
 		<div class="mx-auto flex h-14 max-w-5xl items-center gap-2 px-4">
-			<a href="/" class="mr-auto flex items-center gap-2 rounded-lg py-1 pr-2" aria-label="Journalify – Startseite">
-				<span
-					class="flex size-8 items-center justify-center rounded-[0.6rem] bg-primary text-base"
-					aria-hidden="true">📓</span
-				>
+			<a
+				href="/"
+				class="mr-auto flex items-center gap-2 rounded-lg py-1 pr-2"
+				aria-label="Journalify – Startseite"
+			>
+				<img src="/icon.svg" alt="" class="size-8" width="32" height="32" />
 				<span class="font-display text-xl font-semibold tracking-tight">Journalify</span>
 			</a>
 
@@ -53,7 +54,9 @@
 						href={item.href}
 						class={[
 							'flex h-10 items-center gap-2 rounded-xl px-3 text-sm font-semibold transition',
-							isActive(item.href) ? 'bg-surface-2 text-ink' : 'text-muted hover:bg-surface-2 hover:text-ink'
+							isActive(item.href)
+								? 'bg-surface-2 text-ink'
+								: 'text-muted hover:bg-surface-2 hover:text-ink'
 						]}
 						aria-current={isActive(item.href) ? 'page' : undefined}
 					>
